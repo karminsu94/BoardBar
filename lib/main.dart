@@ -1,4 +1,5 @@
 import 'package:board_bar/screen/BasicCounter.dart';
+import 'package:board_bar/screen/CustomCounter.dart';
 import 'package:board_bar/widget/PixelButton.dart';
 import 'package:board_bar/widget/PixelBorderPainter.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +71,14 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 10.h),
-            child:   PixelButton (title: "Custom Counter",width: 300.w, fontSize: 25.sp,onTap: (){}),
+            child:   PixelButton (title: "Custom Counter",width: 300.w, fontSize: 25.sp,onTap: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CustomCounter(),
+                ),
+              );
+            }),
           ),
         ],
       )),

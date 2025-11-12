@@ -22,8 +22,8 @@ class _BasicCounterState extends State<BasicCounter> {
     // TODO: implement initState
 
     _timerWidget = TimerWidget(key: timerKey);
-    _playerList.add(Player(name: "Player1", score: 0));
-    _playerList.add(Player(name: "Player2", score: 0));
+    _playerList.add(Player(name: "P1", score: 0));
+    _playerList.add(Player(name: "P2", score: 0));
     // _playerList.add(Player(name: "Player3", score: 0));
     // _playerList.add(Player(name: "Player4", score: 0));
     super.initState();

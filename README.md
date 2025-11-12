@@ -1,6 +1,6 @@
 # board_bar
 
-A board game calculate tool
+A Side Bar for board game scoring!
 
 ## Getting Started
 
