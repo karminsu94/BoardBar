@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../style/CustomTextStyle.dart';
+import '../widget/CustomCounterPlayerCard.dart';
 
 class CustomCounter extends StatefulWidget {
   const CustomCounter({Key? key}) : super(key: key);
@@ -17,10 +18,15 @@ class _CustomCounterState extends State<CustomCounter> {
   List<Script> _scriptList = [];
   List<ScriptRecord> _scriptRecordList = [];
 
+  String _currentScriptName = '';
   @override
   void initState() {
     // TODO: implement initState
-    _scriptList.add(Script(name: "script1", fieldList: ["field1","field2","field3","field4","field5"], scoreList: []));
+    _scriptList.add(Script(name: "Harmony", fieldList: ["Animal","Forest","Mountain","Continent","River","Building"]));
+    _scriptRecordList.add(ScriptRecord.inital(playerName: 'p1'));
+    _scriptRecordList.add(ScriptRecord.inital(playerName: 'p2'));
+    _scriptRecordList.add(ScriptRecord.inital(playerName: 'p3'));
+    _scriptRecordList.add(ScriptRecord.inital(playerName: 'p4'));
     super.initState();
   }
 
@@ -36,7 +42,7 @@ class _CustomCounterState extends State<CustomCounter> {
                 await showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: Text('script'),
+                    title: Text("script"),
                     content: SizedBox(
                       height: 300.h,
                       child: SingleChildScrollView (
@@ -45,6 +51,9 @@ class _CustomCounterState extends State<CustomCounter> {
                             return ListTile(
                               title: Text(script.name),
                               onTap: () {
+                                setState(() {
+                                  _currentScriptName = script.name;
+                                });
                                 Navigator.of(context).pop(); // 关闭对话框
                               },
                             );
@@ -55,9 +64,8 @@ class _CustomCounterState extends State<CustomCounter> {
                     ),
                   ),
                 );
-                print("Dialog closed"); // 对话框关闭后执行
               },
-              child: Text("script"),
+              child: Text(_currentScriptName.isEmpty ? "script" : _currentScriptName),
             ),
             IconButton(
                 onPressed: () async {
@@ -150,8 +158,13 @@ class _CustomCounterState extends State<CustomCounter> {
             itemCount: _scriptRecordList.length,
             itemBuilder: (context, index) {
               final record = _scriptRecordList[index];
-              return ListTile(
-                title: Text(record.playerName),
+              CustomCounterPlayerCard(
+                scriptRecord: record,
+                callback: (record) {
+                  setState(() {
+                    _scriptRecordList.remove(record);
+                  });
+                },
               );
             },
           ),

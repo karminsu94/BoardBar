@@ -9,6 +9,12 @@ class ScriptRecord {
   ScriptRecord(
       {required this.scriptId, required this.matchId, required this.playerName, required this.scoreList, required this.scoreDetail});
 
+  ScriptRecord.inital({required this.playerName})
+      : scriptId = '',
+        matchId = '',
+        scoreList = [],
+        scoreDetail = [];
+
   Map<String, dynamic> toJson() {
     return {
       'scriptId': scriptId,

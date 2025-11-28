@@ -1,16 +1,14 @@
 class Script {
   String name;
   List<String> fieldList = [];
-  List<double> scoreList = [];
 
   Script(
-      {required this.name, required this.fieldList, required this.scoreList});
+      {required this.name, required this.fieldList});
 
   Map<String, dynamic> toJson() {
     return {
       'name': name,
       'fieldList': fieldList,
-      'scoreList': scoreList,
     };
   }
 
@@ -18,7 +16,6 @@ class Script {
     return Script(
       name: json['name'],
       fieldList: json['score'],
-      scoreList: json['scoreList'],
     );
   }
 }

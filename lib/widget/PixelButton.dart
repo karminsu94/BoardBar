@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 class PixelButton extends StatelessWidget {
   final String title;
   final double? width;
+  final double? height;
   final double? fontSize;
   final Function onTap;
 
@@ -13,8 +14,9 @@ class PixelButton extends StatelessWidget {
       {super.key,
       required this.title,
       required this.width,
+      required this.height,
       required this.onTap,
-      this.fontSize});
+      this.fontSize, });
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class PixelButton extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(3.w),
         width: width,
+        height: height,
         decoration: BoxDecoration(
           color: const Color(0xff335f70),
           borderRadius: BorderRadius.all(Radius.circular(10.r)),
