@@ -277,127 +277,132 @@ class _BasicCounterCardLandscapeState extends State<BasicCounterCardLandscape> {
                                   return StatefulBuilder(builder:
                                       (BuildContext context,
                                       StateSetter setState) {
-                                    return SizedBox(
-                                      width: double.infinity,
-                                      height: 480.h,
-                                      child: Column(
-                                        // crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Text('添加玩家名称',
-                                              style:
-                                              CustomTextStyle.xiangjiao),
-                                          SizedBox(height: 35.h),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: Color(0xff233c4c),
-                                                    width: 8.w),
-                                                color: Colors.white70),
-                                            width: 350.w,
-                                            child: TextField(
-                                              controller: textEditingController,
-                                              textAlign: TextAlign.center,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  inputName = value;
-                                                });
-                                              },
-                                              decoration: InputDecoration(
-                                                  hintText: '请输入名称',
-                                                  hintStyle: CustomTextStyle
-                                                      .pressStart2p
-                                                      .copyWith(
-                                                    fontSize: 20.sp,
-                                                  )),
-                                              style: CustomTextStyle.xiangjiao
-                                                  .copyWith(
-                                                  fontSize: 20.sp,
-                                                  fontWeight: null),
-                                            ),
-                                          ),
-                                          SizedBox(height: 15.h),
-                                          GestureDetector(
-                                            onTap: () {
-                                              showDialog(
-                                                context: context,
-                                                builder: (BuildContext context) {
-                                                  return AlertDialog(
-                                                    title: Text('选择颜色'),
-                                                    content: SingleChildScrollView(
-                                                      child: ColorPicker(
-                                                        pickerColor: selectedColor,
-                                                        onColorChanged: (Color color) {
-                                                          setState(() {
-                                                            selectedColor = color;
-                                                          });
-                                                        },
-                                                        showLabel: true,
-                                                        pickerAreaHeightPercent: 0.8,
-                                                      ),
-                                                    ),
-                                                    actions: <Widget>[
-                                                      TextButton(
-                                                        child: Text('确定'),
-                                                        onPressed: () {
-                                                          Navigator.of(context).pop();
-                                                        },
-                                                      ),
-                                                    ],
-                                                  );
-                                                },
-                                              );
-
-
-                                              // setState(() {
-                                              //   selectedColor = Color(
-                                              //       (0xFF000000 +
-                                              //               Random().nextInt(
-                                              //                   0x00FFFFFF))
-                                              //           .toInt());
-                                              // });
-                                            },
-                                            child: Container(
-                                                width: 40.w,
-                                                height: 40.w,
-                                                decoration: BoxDecoration(
-                                                  color: selectedColor,
-                                                  borderRadius:
-                                                  BorderRadius.circular(
-                                                      100.r),
+                                    return Padding(
+                                      padding: EdgeInsets.only(
+                                        bottom: MediaQuery.of(context).viewInsets.bottom, // 避免键盘遮挡
+                                      ),
+                                      child: SizedBox(
+                                        width: double.infinity,
+                                        height: 480.h,
+                                        child: Column(
+                                          // crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            Text('添加玩家名称',
+                                                style:
+                                                CustomTextStyle.xiangjiao),
+                                            SizedBox(height: 35.h),
+                                            Container(
+                                              decoration: BoxDecoration(
                                                   border: Border.all(
-                                                      color:
-                                                      const Color(0xff1e3b43),
-                                                      width: 5.w),
-                                                )),
-                                          ),
-                                          SizedBox(height: 35.h),
-                                          TextButton(
-                                            child: Text(
-                                              '确定',
-                                              style: CustomTextStyle.xiangjiao,
+                                                      color: Color(0xff233c4c),
+                                                      width: 8.w),
+                                                  color: Colors.white70),
+                                              width: 350.w,
+                                              child: TextField(
+                                                controller: textEditingController,
+                                                textAlign: TextAlign.center,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    inputName = value;
+                                                  });
+                                                },
+                                                decoration: InputDecoration(
+                                                    hintText: '请输入名称',
+                                                    hintStyle: CustomTextStyle
+                                                        .pressStart2p
+                                                        .copyWith(
+                                                      fontSize: 20.sp,
+                                                    )),
+                                                style: CustomTextStyle.xiangjiao
+                                                    .copyWith(
+                                                    fontSize: 20.sp,
+                                                    fontWeight: null),
+                                              ),
                                             ),
-                                            onPressed: () {
-                                              setState(() {
-                                                if (inputName.isNotEmpty) {
-                                                  widget.player.name = inputName;
-                                                }
-                                                _randomColor = selectedColor;
-                                              });
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                          SizedBox(height: 15.h),
-                                          TextButton(
-                                            child: Text(
-                                              '删除',
-                                              style: CustomTextStyle.xiangjiao,
+                                            SizedBox(height: 15.h),
+                                            GestureDetector(
+                                              onTap: () {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: Text('选择颜色'),
+                                                      content: SingleChildScrollView(
+                                                        child: ColorPicker(
+                                                          pickerColor: selectedColor,
+                                                          onColorChanged: (Color color) {
+                                                            setState(() {
+                                                              selectedColor = color;
+                                                            });
+                                                          },
+                                                          showLabel: true,
+                                                          pickerAreaHeightPercent: 0.8,
+                                                        ),
+                                                      ),
+                                                      actions: <Widget>[
+                                                        TextButton(
+                                                          child: Text('确定'),
+                                                          onPressed: () {
+                                                            Navigator.of(context).pop();
+                                                          },
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+
+
+                                                // setState(() {
+                                                //   selectedColor = Color(
+                                                //       (0xFF000000 +
+                                                //               Random().nextInt(
+                                                //                   0x00FFFFFF))
+                                                //           .toInt());
+                                                // });
+                                              },
+                                              child: Container(
+                                                  width: 40.w,
+                                                  height: 40.w,
+                                                  decoration: BoxDecoration(
+                                                    color: selectedColor,
+                                                    borderRadius:
+                                                    BorderRadius.circular(
+                                                        100.r),
+                                                    border: Border.all(
+                                                        color:
+                                                        const Color(0xff1e3b43),
+                                                        width: 5.w),
+                                                  )),
                                             ),
-                                            onPressed: () {
-                                              widget.callback(widget.player);
-                                              Navigator.of(context).pop(); // 关闭弹窗
-                                            },
-                                          ),
-                                        ],
+                                            SizedBox(height: 35.h),
+                                            TextButton(
+                                              child: Text(
+                                                '确定',
+                                                style: CustomTextStyle.xiangjiao,
+                                              ),
+                                              onPressed: () {
+                                                setState(() {
+                                                  if (inputName.isNotEmpty) {
+                                                    widget.player.name = inputName;
+                                                  }
+                                                  _randomColor = selectedColor;
+                                                });
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                            SizedBox(height: 15.h),
+                                            TextButton(
+                                              child: Text(
+                                                '删除',
+                                                style: CustomTextStyle.xiangjiao,
+                                              ),
+                                              onPressed: () {
+                                                widget.callback(widget.player);
+                                                Navigator.of(context).pop(); // 关闭弹窗
+                                              },
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     );
                                   });

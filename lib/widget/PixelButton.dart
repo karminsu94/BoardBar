@@ -1,7 +1,6 @@
 import 'package:board_bar/style/CustomTextStyle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class PixelButton extends StatelessWidget {
   final String title;
@@ -37,7 +36,7 @@ class PixelButton extends StatelessWidget {
           child: Text(title,
               textAlign: TextAlign.center,
               style: CustomTextStyle.pressStart2p.copyWith(
-                  fontSize: fontSize, color: const Color(0xfff5ddaf))),
+                  fontSize: fontSize, color: const Color(0xffffffff))),
         ),
       ),
     );

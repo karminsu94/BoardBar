@@ -12,6 +12,7 @@ import 'dart:math';
 class BasicCounterCard extends StatefulWidget {
   late Player player;
   late int length;
+  late Color initialColor;
   Function callback;
 
   BasicCounterCard({
@@ -19,6 +20,7 @@ class BasicCounterCard extends StatefulWidget {
     required this.player,
     required this.callback,
     required this.length,
+    required this.initialColor,
   });
 
   @override
@@ -32,8 +34,7 @@ class _BasicCounterCardState extends State<BasicCounterCard> {
   int historyLength = 7;
   final GlobalKey<AnimatedListState> _animatedListKey =
       GlobalKey<AnimatedListState>();
-
-  Color _randomColor = Color(0xFF000000 + Random().nextInt(0x00FFFFFF));
+  final textureName = 'assets/logo/texture-${Random().nextInt(8)}.png';
 
   void _showFloatingText(BuildContext context, String text, Color color,
       double fontSize, double positionParma, bool isMovingUp) {
@@ -70,8 +71,14 @@ class _BasicCounterCardState extends State<BasicCounterCard> {
         height: 150.w,
         decoration: BoxDecoration(
           // color: const Color(0xffb44f33),
-          color: _randomColor,
+          color: widget.initialColor,
+          image: DecorationImage(
+            image: AssetImage(textureName), // 替换为你的透明 PNG 路径, // 替换为你的透明 PNG 路径
+            fit: BoxFit.none, // 根据需要调整背景图片的显示方式
+            repeat: ImageRepeat.repeat, // 设置图片重复铺满
+          )
           // borderRadius: BorderRadius.all(Radius.circular(10)),
+
         ),
         child: Stack(
           children: [
@@ -87,34 +94,38 @@ class _BasicCounterCardState extends State<BasicCounterCard> {
                       // color: const Color(0xff233c4c),
                       // borderRadius: BorderRadius.circular(10),
                       ),
-                  child: widget.player.scoreDetail.isEmpty?null:AnimatedList(
-                    key: _animatedListKey,
-                    initialItemCount:
-                        widget.player.scoreDetail.length >= historyLength
-                            ? historyLength
-                            : widget.player.scoreDetail.length,
-                    itemBuilder: (context, index, animation) {
-                      return SlideTransition(
-                        position: animation.drive(
-                          Tween<Offset>(
-                            begin: const Offset(2, 0),
-                            end: Offset.zero,
-                          ).chain(CurveTween(curve: Curves.easeInOut)),
-                        ),
-                        child: Text(
-                          widget.player.scoreDetail.length >= historyLength
-                              ? widget.player.scoreDetail[index +
-                                  widget.player.scoreDetail.length -
-                                  historyLength]
-                              : widget.player.scoreDetail[index],
-                          style: CustomTextStyle.pressStart2pShadow.copyWith(
-                            fontSize: 10.sp,
-                            color: Colors.amberAccent,
-                          ),
-                        ),
-                      );
-                    },
-                  )
+                  child: widget.player.scoreDetail.isEmpty
+                      ? null
+                      : AnimatedList(
+                          key: _animatedListKey,
+                          initialItemCount:
+                              widget.player.scoreDetail.length >= historyLength
+                                  ? historyLength
+                                  : widget.player.scoreDetail.length,
+                          itemBuilder: (context, index, animation) {
+                            return SlideTransition(
+                              position: animation.drive(
+                                Tween<Offset>(
+                                  begin: const Offset(2, 0),
+                                  end: Offset.zero,
+                                ).chain(CurveTween(curve: Curves.easeInOut)),
+                              ),
+                              child: Text(
+                                widget.player.scoreDetail.length >=
+                                        historyLength
+                                    ? widget.player.scoreDetail[index +
+                                        widget.player.scoreDetail.length -
+                                        historyLength]
+                                    : widget.player.scoreDetail[index],
+                                style:
+                                    CustomTextStyle.pressStart2pShadow.copyWith(
+                                  fontSize: 10.sp,
+                                  color: Colors.amberAccent,
+                                ),
+                              ),
+                            );
+                          },
+                        )
                   // child: ListView.builder(
                   //   itemCount: widget.player.scoreDetail.length > historyLength
                   //       ? historyLength
@@ -155,70 +166,44 @@ class _BasicCounterCardState extends State<BasicCounterCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            widget.player.score = widget.player.score - 10;
-                            widget.player.scoreDetail.add("-10");
-                            updateAnimatedList(historyLength);
-                          });
-                          _showFloatingText(context, "-10", Colors.black87,
-                              35.sp, 2.5, false);
-                        },
-                        child: Container(
-                          // padding: EdgeInsets.all(3.w),
-                          margin: EdgeInsets.only(
-                              top: 15.w, bottom: 5.w, left: 10.w),
-                          width: 50.w,
-                          height: 50.w,
-                          decoration: BoxDecoration(
-                            color: const Color(0xff335f70),
-                            border: Border.all(
-                                color: const Color(0xff1e3b43), width: 5.w),
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 5.w),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                widget.player.score = widget.player.score - 10;
+                                widget.player.scoreDetail.add("-10");
+                                updateAnimatedList(historyLength);
+                              });
+                              _showFloatingText(context, "-10", Colors.black87,
+                                  35.sp, 2.5, false);
+                            },
+                            child: Image.asset(
+                              'assets/logo/min10.png', // 替换为你的图片路径
+                              fit: BoxFit.fitWidth,
+                              opacity: AlwaysStoppedAnimation(0.9),
+
+                            )),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              widget.player.score = widget.player.score - 5;
+                              widget.player.scoreDetail.add("-5");
+                              updateAnimatedList(historyLength);
+                            });
+                            _showFloatingText(context, "-5", Colors.black87,
+                                28.sp, 2.3, false);
+                          },
+                          child: Image.asset(
+                            'assets/logo/min5.png', // 替换为你的图片路径
+                            fit: BoxFit.fitWidth,
                           ),
-                          child: Center(
-                            child: Text("-10",
-                                style: CustomTextStyle.pressStart2p.copyWith(
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 12.sp,
-                                    color: const Color(0xfff5ddaf))),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            widget.player.score = widget.player.score - 5;
-                            widget.player.scoreDetail.add("-5");
-                            updateAnimatedList(historyLength);
-                          });
-                          _showFloatingText(
-                              context, "-5", Colors.black87, 28.sp, 2.3, false);
-                        },
-                        child: Container(
-                          // padding: EdgeInsets.all(3.w),
-                          margin: EdgeInsets.only(
-                              top: 5.w, bottom: 5.w, left: 10.w),
-                          width: 50.w,
-                          height: 50.w,
-                          decoration: BoxDecoration(
-                            color: const Color(0xff335f70),
-                            border: Border.all(
-                                color: const Color(0xff1e3b43), width: 5.w),
-                          ),
-                          child: Center(
-                            child: Text("-5",
-                                style: CustomTextStyle.pressStart2p.copyWith(
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 12.sp,
-                                    color: const Color(0xfff5ddaf))),
-                          ),
-                        ),
-                      ),
-                    ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 GestureDetector(
@@ -338,136 +323,153 @@ class _BasicCounterCardState extends State<BasicCounterCard> {
                             var textEditingController =
                                 TextEditingController(text: widget.player.name);
                             String inputName = '';
-                            Color selectedColor = _randomColor;
+                            Color selectedColor = widget.initialColor;
 
                             await showModalBottomSheet(
                               context: context,
-                              backgroundColor: const Color(0xfff9e0b2), // 设置背景色
+                              backgroundColor: const Color(0xfff9e0b2),
+                              isScrollControlled: true,
+                              // backgroundColor: const Color(0xfff9e0b2), // 设置背景色
                               builder: (BuildContext context) {
                                 return StatefulBuilder(builder:
                                     (BuildContext context,
                                         StateSetter setState) {
-                                  return SizedBox(
-                                    width: double.infinity,
-                                    height: 480.h,
-                                    child: Column(
-                                      // crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Text('添加玩家名称',
-                                            style:
-                                                CustomTextStyle.xiangjiao),
-                                        SizedBox(height: 35.h),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Color(0xff233c4c),
-                                                  width: 8.w),
-                                              color: Colors.white70),
-                                          width: 350.w,
-                                          child: TextField(
-                                            controller: textEditingController,
-                                            textAlign: TextAlign.center,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                inputName = value;
-                                              });
-                                            },
-                                            decoration: InputDecoration(
-                                                hintText: '请输入名称',
-                                                hintStyle: CustomTextStyle
-                                                    .pressStart2p
-                                                    .copyWith(
-                                                  fontSize: 20.sp,
-                                                )),
-                                            style: CustomTextStyle.xiangjiao
-                                                .copyWith(
-                                                    fontSize: 20.sp,
-                                                    fontWeight: null),
-                                          ),
-                                        ),
-                                        SizedBox(height: 15.h),
-                                        GestureDetector(
-                                          onTap: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return AlertDialog(
-                                                  title: Text('选择颜色'),
-                                                  content: SingleChildScrollView(
-                                                    child: ColorPicker(
-                                                      pickerColor: selectedColor,
-                                                      onColorChanged: (Color color) {
-                                                        setState(() {
-                                                          selectedColor = color;
-                                                        });
-                                                      },
-                                                      showLabel: true,
-                                                      pickerAreaHeightPercent: 0.8,
-                                                    ),
-                                                  ),
-                                                  actions: <Widget>[
-                                                    TextButton(
-                                                      child: Text('确定'),
-                                                      onPressed: () {
-                                                        Navigator.of(context).pop();
-                                                      },
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            );
-
-
-                                            // setState(() {
-                                            //   selectedColor = Color(
-                                            //       (0xFF000000 +
-                                            //               Random().nextInt(
-                                            //                   0x00FFFFFF))
-                                            //           .toInt());
-                                            // });
-                                          },
-                                          child: Container(
-                                              width: 40.w,
-                                              height: 40.w,
-                                              decoration: BoxDecoration(
-                                                color: selectedColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        100.r),
+                                  return Padding(
+                                    padding: EdgeInsets.only(
+                                      bottom: MediaQuery.of(context)
+                                          .viewInsets
+                                          .bottom, // 避免键盘遮挡
+                                    ),
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      height: 480.h,
+                                      child: Column(
+                                        // crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Text('添加玩家名称',
+                                              style: CustomTextStyle.xiangjiao),
+                                          SizedBox(height: 35.h),
+                                          Container(
+                                            decoration: BoxDecoration(
                                                 border: Border.all(
-                                                    color:
-                                                        const Color(0xff1e3b43),
-                                                    width: 5.w),
-                                              )),
-                                        ),
-                                        SizedBox(height: 35.h),
-                                        TextButton(
-                                          child: Text(
-                                            '确定',
-                                            style: CustomTextStyle.xiangjiao,
+                                                    color: Color(0xff233c4c),
+                                                    width: 8.w),
+                                                color: Colors.white70),
+                                            width: 350.w,
+                                            child: TextField(
+                                              controller: textEditingController,
+                                              textAlign: TextAlign.center,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  inputName = value;
+                                                });
+                                              },
+                                              decoration: InputDecoration(
+                                                  hintText: '请输入名称',
+                                                  hintStyle: CustomTextStyle
+                                                      .pressStart2p
+                                                      .copyWith(
+                                                    fontSize: 20.sp,
+                                                  )),
+                                              style: CustomTextStyle.xiangjiao
+                                                  .copyWith(
+                                                      fontSize: 20.sp,
+                                                      fontWeight: null),
+                                            ),
                                           ),
-                                          onPressed: () {
-                                            setState(() {
-                                              if (inputName.isNotEmpty) {
-                                                widget.player.name = inputName;
-                                              }
-                                              _randomColor = selectedColor;
-                                            });
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                        SizedBox(height: 15.h),
-                                        TextButton(
-                                          child: Text(
-                                            '删除',
-                                            style: CustomTextStyle.xiangjiao,
+                                          SizedBox(height: 15.h),
+                                          GestureDetector(
+                                            onTap: () {
+                                              showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    title: Text('选择颜色'),
+                                                    content:
+                                                        SingleChildScrollView(
+                                                      child: ColorPicker(
+                                                        pickerColor:
+                                                            selectedColor,
+                                                        onColorChanged:
+                                                            (Color color) {
+                                                          setState(() {
+                                                            selectedColor =
+                                                                color;
+                                                          });
+                                                        },
+                                                        showLabel: true,
+                                                        pickerAreaHeightPercent:
+                                                            0.8,
+                                                      ),
+                                                    ),
+                                                    actions: <Widget>[
+                                                      TextButton(
+                                                        child: Text('确定'),
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+
+                                              // setState(() {
+                                              //   selectedColor = Color(
+                                              //       (0xFF000000 +
+                                              //               Random().nextInt(
+                                              //                   0x00FFFFFF))
+                                              //           .toInt());
+                                              // });
+                                            },
+                                            child: Container(
+                                                width: 40.w,
+                                                height: 40.w,
+                                                decoration: BoxDecoration(
+                                                  color: selectedColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          100.r),
+                                                  border: Border.all(
+                                                      color: const Color(
+                                                          0xff1e3b43),
+                                                      width: 5.w),
+                                                )),
                                           ),
-                                          onPressed: () {
-                                            widget.callback(widget.player);
-                                            Navigator.of(context).pop(); // 关闭弹窗
-                                          },
-                                        ),
-                                      ],
+                                          SizedBox(height: 35.h),
+                                          TextButton(
+                                            child: Text(
+                                              '确定',
+                                              style: CustomTextStyle.xiangjiao,
+                                            ),
+                                            onPressed: () {
+                                              setState(() {
+                                                if (inputName.isNotEmpty) {
+                                                  widget.player.name =
+                                                      inputName;
+                                                }
+                                                widget.initialColor =
+                                                    selectedColor;
+                                              });
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          SizedBox(height: 15.h),
+                                          TextButton(
+                                            child: Text(
+                                              '删除',
+                                              style: CustomTextStyle.xiangjiao,
+                                            ),
+                                            onPressed: () {
+                                              widget.callback(widget.player);
+                                              Navigator.of(context)
+                                                  .pop(); // 关闭弹窗
+                                            },
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   );
                                 });
@@ -475,12 +477,10 @@ class _BasicCounterCardState extends State<BasicCounterCard> {
                             );
 
                             setState(() {});
-
                           },
                           child: Text(
                             widget.player.name,
                             style: CustomTextStyle.xiangjiaoShadow.copyWith(
-
                               fontSize: 25.sp,
                             ),
                           ),
@@ -490,80 +490,72 @@ class _BasicCounterCardState extends State<BasicCounterCard> {
                         ),
                         Text(
                           "${widget.player.score}",
-                          style: widget.length<=2?
-                          CustomTextStyle.pressStart2pShadow.copyWith(fontSize: 75.sp):
-                              CustomTextStyle.pressStart2pShadow,
+                          style: widget.length <= 2
+                              ? CustomTextStyle.pressStart2pShadow
+                                  .copyWith(fontSize: 75.sp)
+                              : CustomTextStyle.pressStart2pShadow,
                         ),
                       ],
                     ),
                   ),
                 ),
                 Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            widget.player.score = widget.player.score + 10;
-                            widget.player.scoreDetail.add("+10");
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 5.w),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                widget.player.score = widget.player.score + 10;
+                                widget.player.scoreDetail.add("+10");
 
-                            updateAnimatedList(historyLength);
-                          });
-                          _showFloatingText(context, "+10", Colors.yellowAccent,
-                              35.sp, 2.5, true);
-                        },
-                        child: Container(
-                          // padding: EdgeInsets.all(3.w),
-                          margin: EdgeInsets.only(
-                              top: 15.w, bottom: 5.w, right: 10.w),
-                          width: 50.w,
-                          height: 50.w,
-                          decoration: BoxDecoration(
-                            color: const Color(0xff335f70),
-                            border: Border.all(
-                                color: const Color(0xff1e3b43), width: 5.w),
+                                updateAnimatedList(historyLength);
+                              });
+                              _showFloatingText(context, "+10",
+                                  Colors.yellowAccent, 35.sp, 2.5, true);
+                            },
+                            child: Image.asset(
+                              'assets/logo/plus10.png', // 替换为你的图片路径
+                              fit: BoxFit.fitWidth,
+                            )),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              widget.player.score = widget.player.score + 5;
+                              widget.player.scoreDetail.add("+5");
+                              updateAnimatedList(historyLength);
+                            });
+                            _showFloatingText(
+                                context, "+5", Colors.yellow, 28.sp, 2.3, true);
+                          },
+                          child: Image.asset(
+                            'assets/logo/plus5.png', // 替换为你的图片路径
+                            fit: BoxFit.fitWidth,
                           ),
-                          child: Center(
-                            child: Text("+10",
-                                style: CustomTextStyle.pressStart2p.copyWith(
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 12.sp,
-                                    color: const Color(0xfff5ddaf))),
-                          ),
+                          // Container(
+                          //   // padding: EdgeInsets.all(3.w),
+                          //   margin: EdgeInsets.only(
+                          //       top: 5.w, bottom: 5.w, right: 10.w),
+                          //   width: 50.w,
+                          //   height: 50.w,
+                          //   decoration: BoxDecoration(
+                          //     color: const Color(0xff335f70),
+                          //     border: Border.all(
+                          //         color: const Color(0xff1e3b43), width: 5.w),
+                          //   ),
+                          //   child: Center(
+                          //     child: Text("+5",
+                          //         style: CustomTextStyle.pressStart2p.copyWith(
+                          //             fontWeight: FontWeight.w300,
+                          //             fontSize: 12.sp,
+                          //             color: const Color(0xfff5ddaf))),
+                          //   ),
+                          // ),
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            widget.player.score = widget.player.score + 5;
-                            widget.player.scoreDetail.add("+5");
-                            updateAnimatedList(historyLength);
-                          });
-                          _showFloatingText(
-                              context, "+5", Colors.yellow, 28.sp, 2.3, true);
-                        },
-                        child: Container(
-                          // padding: EdgeInsets.all(3.w),
-                          margin: EdgeInsets.only(
-                              top: 5.w, bottom: 5.w, right: 10.w),
-                          width: 50.w,
-                          height: 50.w,
-                          decoration: BoxDecoration(
-                            color: const Color(0xff335f70),
-                            border: Border.all(
-                                color: const Color(0xff1e3b43), width: 5.w),
-                          ),
-                          child: Center(
-                            child: Text("+5",
-                                style: CustomTextStyle.pressStart2p.copyWith(
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 12.sp,
-                                    color: const Color(0xfff5ddaf))),
-                          ),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],

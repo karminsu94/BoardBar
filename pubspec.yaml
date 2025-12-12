@@ -36,8 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_screenutil: 5.9.0
   google_fonts: ^6.2.1
-  #  socket_io_client: ^3.1.2
-  socket_io: ^1.0.1
+#  socket_io_client: ^3.1.2
+#  socket_io: ^1.0.1
   flutter_colorpicker: ^1.1.0
 
 
@@ -67,19 +67,24 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/logo/
   fonts:
-    - family: HYPixel11pxU
-      fonts:
-        - asset: assets/fonts/HYPixel11pxU-2.ttf
-    - family: AaWeiWeiDianZhenTi
-      fonts:
-        - asset: assets/fonts/AaWeiWeiDianZhenTi-2.ttf
-    - family: XiangJiaoXiLeShouShu
-      fonts:
-        - asset: assets/fonts/XiangJiaoXiLeShouShu-2.ttf
+#    - family: HYPixel11pxU
+#      fonts:
+#        - asset: assets/fonts/HYPixel11pxU-2.ttf
+#    - family: AaWeiWeiDianZhenTi
+#      fonts:
+#        - asset: assets/fonts/AaWeiWeiDianZhenTi-2.ttf
+#    - family: XiangJiaoXiLeShouShu
+#      fonts:
+#        - asset: assets/fonts/XiangJiaoXiLeShouShu-2.ttf
     - family: PressStart2P
       fonts:
         - asset: assets/fonts/PressStart2P-Regular.ttf
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-VariableFont_wdth,wght.ttf
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

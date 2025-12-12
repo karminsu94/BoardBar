@@ -1,9 +1,14 @@
+import 'dart:ui';
+
 class Player {
   String name;
   int score;
+  Color? color ;
   List<String> scoreDetail = [];
 
   Player({required this.name, required this.score});
+
+  Player.withColor({required this.name, required this.score, required this.color});
 
   Map<String, dynamic> toJson() {
     return {
@@ -14,9 +19,6 @@ class Player {
   }
 
   factory Player.fromJson(Map<String, dynamic> json) {
-    return Player(
-      name: json['name'],
-      score: json['score']
-    );
+    return Player(name: json['name'], score: json['score']);
   }
 }

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../style/CustomTextStyle.dart';
 
@@ -59,11 +58,11 @@ class TimerWidgetState extends State<TimerWidget> {
 
   void resetTimer() {
     _seconds = 0;
-    if(!_isRunning){
-      _startTimer();
-    }else{
-      _pauseTimer();
-    }
+    // if(!_isRunning){
+    //   _startTimer();
+    // }else{
+    //   _pauseTimer();
+    // }
   }
 
   @override

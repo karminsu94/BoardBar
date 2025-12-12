@@ -24,7 +24,7 @@ class CustomTextStyle {
   );
 
   static final TextStyle xiangjiaoShadow = TextStyle(
-    fontFamily: 'XiangJiaoXiLeShouShu',
+    fontFamily: 'PressStart2P',
     fontWeight: FontWeight.w900,
     fontSize: 40.sp,
     color: const Color(0xfff5ddaf),
@@ -38,7 +38,7 @@ class CustomTextStyle {
   );
 
   static final TextStyle xiangjiao = TextStyle(
-    fontFamily: 'XiangJiaoXiLeShouShu',
+    fontFamily: 'PressStart2P',
     fontWeight: FontWeight.w900,
     fontSize: 25.sp,
     color: Colors.black87,

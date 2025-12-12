@@ -23,9 +23,12 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'BB',
             theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey),
-              useMaterial3: true,
-            ),
+                colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey),
+                useMaterial3: true,
+                textTheme: TextTheme(
+                    bodyLarge: TextStyle(fontFamily: 'Roboto'),
+                    bodyMedium: TextStyle(fontFamily: 'Roboto'),
+                    bodySmall: TextStyle(fontFamily: 'Roboto'))),
             home: const MyHomePage(title: 'Flutter Demo Home Page'),
           );
         });
@@ -44,94 +47,130 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      backgroundColor: const Color(0xfff9e0b2),
-      body:       MediaQuery.of(context).orientation == Orientation.portrait?
-      Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.h),
-            child: PixelButton(title: '✍Basic Counter',width: 300.w, height:140.h,fontSize: 25.sp,onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => BasicCounter(),
-                ),
-              );
-            }),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.h),
-            child:   PixelButton (title: "Duel Counter",width: 300.w, height:140.h,fontSize: 25.sp,onTap: (){}),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.h),
-            child:   PixelButton (title: "♛Count Down",width: 300.w,height:140.h, fontSize: 25.sp,onTap: (){}),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 10.h),
-            child:   PixelButton (title: "Custom Counter",width: 300.w,height:140.h, fontSize: 25.sp,onTap: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CustomCounter(),
-                ),
-              );
-            }),
-          ),
-        ],
-      )):
-      Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        backgroundColor: const Color(0xfff9e0b2),
+        body: MediaQuery.of(context).orientation == Orientation.portrait
+            ? Center(
+                child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 10.h),
-                    child: PixelButton(title: '✍Basic Counter',width: 150.w, height:140.h,fontSize: 12.sp,onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BasicCounter(),
-                        ),
-                      );
-                    }),
+                    child: PixelButton(
+                        title: 'Basic Counter',
+                        width: 300.w,
+                        height: 140.h,
+                        fontSize: 25.sp,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BasicCounter(),
+                            ),
+                          );
+                        }),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 10.h),
-                    child:   PixelButton (title: "Duel Counter",width: 150.w, height:140.h,fontSize: 12.sp,onTap: (){}),
+                    child: PixelButton(
+                        title: "Duel Counter",
+                        width: 300.w,
+                        height: 140.h,
+                        fontSize: 25.sp,
+                        onTap: () {}),
                   ),
-
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10.h),
+                    child: PixelButton(
+                        title: "Count Down",
+                        width: 300.w,
+                        height: 140.h,
+                        fontSize: 25.sp,
+                        onTap: () {}),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10.h),
+                    child: PixelButton(
+                        title: "Custom Counter",
+                        width: 300.w,
+                        height: 140.h,
+                        fontSize: 25.sp,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CustomCounter(),
+                            ),
+                          );
+                        }),
+                  ),
                 ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              ))
+            : Center(
+                child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10.h),
-                    child:   PixelButton (title: "♛Count Down",width: 150.w,height:140.h, fontSize: 12.sp,onTap: (){}),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.h),
+                        child: PixelButton(
+                            title: 'Basic Counter',
+                            width: 150.w,
+                            height: 140.h,
+                            fontSize: 12.sp,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => BasicCounter(),
+                                ),
+                              );
+                            }),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.h),
+                        child: PixelButton(
+                            title: "Duel Counter",
+                            width: 150.w,
+                            height: 140.h,
+                            fontSize: 12.sp,
+                            onTap: () {}),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10.h),
-                    child:   PixelButton (title: "Custom Counter",width: 150.w,height:140.h, fontSize: 12.sp,onTap: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CustomCounter(),
-                        ),
-                      );
-                    }),
-                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.h),
+                        child: PixelButton(
+                            title: "Count Down",
+                            width: 150.w,
+                            height: 140.h,
+                            fontSize: 12.sp,
+                            onTap: () {}),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.h),
+                        child: PixelButton(
+                            title: "Custom Counter",
+                            width: 150.w,
+                            height: 140.h,
+                            fontSize: 12.sp,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CustomCounter(),
+                                ),
+                              );
+                            }),
+                      ),
+                    ],
+                  )
                 ],
-              )
-
-            ],
-          ))
-    );
+              )));
   }
 }
