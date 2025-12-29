@@ -3,6 +3,8 @@ import 'dart:ui';
 class Player {
   String name;
   int score;
+  int subScore1 = 0;
+  int subScore2 = 0;
   Color? color ;
   List<String> scoreDetail = [];
 
