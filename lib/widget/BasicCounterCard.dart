@@ -70,9 +70,9 @@ class _BasicCounterCardState extends State<BasicCounterCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 5.h,bottom: 5.h, left: 10.w, right: 10.w),
+      padding: EdgeInsets.only(top: 6.h,bottom: 6.h, left: 10.w, right: 10.w),
       child: Container(
-          height: 170.h,
+          height: 160.h,
           decoration: BoxDecoration(
             // color: const Color(0xffb44f33),
             color: widget.player.color,

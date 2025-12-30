@@ -97,31 +97,31 @@ class _MyHomePageState extends State<MyHomePage> {
                             );
                           }),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.h),
-                      child: PixelButton(
-                          title: "Count Down",
-                          width: 300.w,
-                          height: 140.h,
-                          fontSize: 25.sp,
-                          onTap: () {}),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.h),
-                      child: PixelButton(
-                          title: "Custom Counter",
-                          width: 300.w,
-                          height: 140.h,
-                          fontSize: 25.sp,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => CustomCounter(),
-                              ),
-                            );
-                          }),
-                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.symmetric(vertical: 10.h),
+                    //   child: PixelButton(
+                    //       title: "Count Down",
+                    //       width: 300.w,
+                    //       height: 140.h,
+                    //       fontSize: 25.sp,
+                    //       onTap: () {}),
+                    // ),
+                    // Padding(
+                    //   padding: EdgeInsets.symmetric(vertical: 10.h),
+                    //   child: PixelButton(
+                    //       title: "Custom Counter",
+                    //       width: 300.w,
+                    //       height: 140.h,
+                    //       fontSize: 25.sp,
+                    //       onTap: () {
+                    //         Navigator.push(
+                    //           context,
+                    //           MaterialPageRoute(
+                    //             builder: (context) => CustomCounter(),
+                    //           ),
+                    //         );
+                    //       }),
+                    // ),
                   ],
                 ))
               : Center(
@@ -158,36 +158,36 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10.h),
-                          child: PixelButton(
-                              title: "Count Down",
-                              width: 150.w,
-                              height: 140.h,
-                              fontSize: 12.sp,
-                              onTap: () {}),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10.h),
-                          child: PixelButton(
-                              title: "Custom Counter",
-                              width: 150.w,
-                              height: 140.h,
-                              fontSize: 12.sp,
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => CustomCounter(),
-                                  ),
-                                );
-                              }),
-                        ),
-                      ],
-                    )
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //   children: [
+                    //     Padding(
+                    //       padding: EdgeInsets.symmetric(vertical: 10.h),
+                    //       child: PixelButton(
+                    //           title: "Count Down",
+                    //           width: 150.w,
+                    //           height: 140.h,
+                    //           fontSize: 12.sp,
+                    //           onTap: () {}),
+                    //     ),
+                    //     Padding(
+                    //       padding: EdgeInsets.symmetric(vertical: 10.h),
+                    //       child: PixelButton(
+                    //           title: "Custom Counter",
+                    //           width: 150.w,
+                    //           height: 140.h,
+                    //           fontSize: 12.sp,
+                    //           onTap: () {
+                    //             Navigator.push(
+                    //               context,
+                    //               MaterialPageRoute(
+                    //                 builder: (context) => CustomCounter(),
+                    //               ),
+                    //             );
+                    //           }),
+                    //     ),
+                    //   ],
+                    // )
                   ],
                 ))),
     );
