@@ -6,11 +6,12 @@ class Player {
   int subScore1 = 0;
   int subScore2 = 0;
   Color? color ;
+  String? textureName ;
   List<String> scoreDetail = [];
 
   Player({required this.name, required this.score});
 
-  Player.withColor({required this.name, required this.score, required this.color});
+  Player.withColor({required this.name, required this.score, required this.color ,required this.textureName});
 
   Map<String, dynamic> toJson() {
     return {

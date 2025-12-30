@@ -4,10 +4,17 @@ import 'package:board_bar/screen/DuelCounter.dart';
 import 'package:board_bar/widget/PixelButton.dart';
 import 'package:board_bar/widget/PixelBorderPainter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp, // 仅允许竖屏
+    DeviceOrientation.portraitDown, // 允许倒置竖屏（可选）
+  ]).then((_) {
+    runApp(MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -17,14 +24,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-        designSize: const Size(412, 892),
+        designSize: const Size(390, 844),
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
           return MaterialApp(
             title: 'BB',
             theme: ThemeData(
-                colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey),
+                colorScheme: ColorScheme.fromSeed(seedColor: Color(0xff696969)),
                 useMaterial3: true,
                 textTheme: TextTheme(
                     bodyLarge: TextStyle(fontFamily: 'Roboto'),

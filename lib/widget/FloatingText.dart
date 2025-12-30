@@ -1,6 +1,7 @@
 import 'package:board_bar/style/CustomTextStyle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FloatingText extends StatefulWidget {
   final String text;
@@ -61,12 +62,17 @@ class FloatingTextState extends State<FloatingText>
       opacity: _opacityAnimation,
       child: SlideTransition(
         position: _positionAnimation,
-        child: Text(
-          widget.text,
-          style: CustomTextStyle.pressStart2p.copyWith(
-            decoration: TextDecoration.none,
-            fontSize: widget.fontSize,
-            color: widget.color,
+        child: SizedBox(
+          width: 150.w,
+          child: Center(
+            child: Text(
+              widget.text,
+              style: CustomTextStyle.pressStart2p.copyWith(
+                decoration: TextDecoration.none,
+                fontSize: widget.fontSize,
+                color: widget.color,
+              ),
+            ),
           ),
         ),
       ),

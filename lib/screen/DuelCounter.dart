@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:board_bar/model/Player.dart';
 import 'package:board_bar/style/CustomTextStyle.dart';
 import 'package:board_bar/widget/BasicCounterCard.dart';
+import 'package:board_bar/widget/CountdownTimerWidget.dart';
 import 'package:board_bar/widget/TimerWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,36 +20,36 @@ class DuelCounter extends StatefulWidget {
 
 class _DuelCounterState extends State<DuelCounter> {
   List<Player> _playerList = [];
-  TimerWidget? _timerWidget;
+  int initialSecond = 0;
+  bool isShowingCountdownTimer = false;
   bool isShowingSubCounter1 = false;
   bool isShowingSubCounter2 = false;
   late List<Color> defaultColorList;
-  Map<int,List<Color>> customColorList = {
+  Map<int, List<Color>> customColorList = {
     0: [Colors.redAccent, Colors.lightBlueAccent],
     1: [Colors.orange, Colors.blueAccent],
-    2: [Color(0xffC54B8C), Colors.lightGreenAccent],
-    3: [Colors.yellowAccent, Color(0xff6F00FF),],
+    2: [Colors.pinkAccent, Colors.lightGreenAccent],
+    3: [
+      Colors.yellowAccent,
+      Color(0xff6F00FF),
+    ],
   };
-  var textureNum = Random().nextInt(8);
 
   final GlobalKey<TimerWidgetState> timerKey = GlobalKey();
 
   @override
   void initState() {
     // TODO: implement initState
-    _timerWidget = TimerWidget(key: timerKey);
     defaultColorList = customColorList[math.Random().nextInt(3)]!;
     _playerList.add(
-        Player.withColor(name: "🐴", score: 0, color: defaultColorList[0]));
+        Player.withColor(name: "🐴", score: 0, color: defaultColorList[0],textureName: 'assets/logo/texture-${Random().nextInt(8)}.png'));
     _playerList.add(
-        Player.withColor(name: "🐶", score: 0, color: defaultColorList[1]));
+        Player.withColor(name: "🐶", score: 0, color: defaultColorList[1],textureName: 'assets/logo/texture-${Random().nextInt(8)}.png'));
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return MediaQuery(
       ///设置文字大小不随系统设置改变
       data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
@@ -64,8 +65,6 @@ class _DuelCounterState extends State<DuelCounter> {
                     child: DuelCounterCard(
                       player: _playerList[0],
                       length: _playerList.length,
-                      initialColor: defaultColorList[0],
-                      textureRandomNum: textureNum,
                       isShowingSubCounter1: isShowingSubCounter1,
                       isShowingSubCounter2: isShowingSubCounter2,
                       isFlipped: true,
@@ -81,8 +80,6 @@ class _DuelCounterState extends State<DuelCounter> {
                   child: DuelCounterCard(
                     player: _playerList[1],
                     length: _playerList.length,
-                    initialColor: defaultColorList[1],
-                    textureRandomNum: textureNum,
                     isShowingSubCounter1: isShowingSubCounter1,
                     isShowingSubCounter2: isShowingSubCounter2,
                     isFlipped: false,
@@ -96,8 +93,8 @@ class _DuelCounterState extends State<DuelCounter> {
               ],
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height / 2 - 50, // 调整位置
-              left: MediaQuery.of(context).size.width / 2 - 50, // 调整位置
+              top: MediaQuery.of(context).size.height / 2 - 50.w, // 调整位置
+              left: MediaQuery.of(context).size.width / 2 - 50.w, // 调整位置
               child: Container(
                 decoration: BoxDecoration(
                   // image: DecorationImage(
@@ -112,11 +109,11 @@ class _DuelCounterState extends State<DuelCounter> {
                   ),
                   border: Border.all(color: Colors.black54, width: 4.w),
                   borderRadius: BorderRadius.all(
-                    Radius.circular(50.r),
+                    Radius.circular(38.r),
                   ),
                 ),
-                width: 100,
-                height: 100,
+                width: 100.w,
+                height: 100.w,
                 child: Column(
                   children: [
                     Expanded(
@@ -124,7 +121,7 @@ class _DuelCounterState extends State<DuelCounter> {
                         child: Transform.rotate(
                           angle: math.pi,
                           child: Text(
-                           '${_playerList[1].score}',
+                            '${_playerList[1].score}',
                             style: CustomTextStyle.pressStart2pShadow.copyWith(
                               fontSize: 17.sp,
                               color: Colors.white,
@@ -146,7 +143,8 @@ class _DuelCounterState extends State<DuelCounter> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.symmetric(vertical: 8.h),
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 8.h),
                                       child: TextButton(
                                         onPressed: () {
                                           timerKey.currentState?.resetTimer();
@@ -154,6 +152,8 @@ class _DuelCounterState extends State<DuelCounter> {
                                             for (var player in _playerList) {
                                               player.score = 0;
                                               player.scoreDetail = [];
+                                              player.subScore1 = 0;
+                                              player.subScore2 = 0;
                                             }
                                           });
                                           Navigator.of(context).pop();
@@ -166,16 +166,143 @@ class _DuelCounterState extends State<DuelCounter> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.symmetric(vertical: 8.h),
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 8.h),
                                       child: TextButton(
                                         style: ButtonStyle(
-                                          backgroundColor: WidgetStateProperty.all(
-                                            isShowingSubCounter1 ? CupertinoColors.activeGreen : CupertinoColors.inactiveGray,
+                                          backgroundColor:
+                                              WidgetStateProperty.all(
+                                            isShowingCountdownTimer
+                                                ? CupertinoColors.activeGreen
+                                                : CupertinoColors.inactiveGray,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          if (isShowingCountdownTimer) {
+                                            setState(() {
+                                              isShowingCountdownTimer =
+                                                  !isShowingCountdownTimer;
+                                            });
+                                            Navigator.of(context).pop();
+                                          } else {
+                                            showCupertinoModalPopup(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                int selectedMinutes = 0;
+                                                int selectedSeconds = 0;
+                                                return Container(
+                                                  height: 250.h,
+                                                  color: Colors.white,
+                                                  child: Column(
+                                                    children: [
+                                                      SizedBox(
+                                                        height: 200.h,
+                                                        child: Row(
+                                                          children: [
+                                                            Expanded(
+                                                              child:
+                                                                  CupertinoPicker(
+                                                                itemExtent:
+                                                                    32.0,
+                                                                onSelectedItemChanged:
+                                                                    (int
+                                                                        index) {
+                                                                  selectedMinutes =
+                                                                      index;
+                                                                },
+                                                                children: List<
+                                                                        Widget>.generate(
+                                                                    60, (int
+                                                                        index) {
+                                                                  return Center(
+                                                                      child: Text(
+                                                                          '$index'));
+                                                                }),
+                                                              ),
+                                                            ),
+                                                            Text(":",
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        18.sp,
+                                                                    color: Colors
+                                                                        .black)),
+                                                            Expanded(
+                                                              child:
+                                                                  CupertinoPicker(
+                                                                itemExtent:
+                                                                    32.0,
+                                                                onSelectedItemChanged:
+                                                                    (int
+                                                                        index) {
+                                                                  selectedSeconds =
+                                                                      index;
+                                                                },
+                                                                children: List<
+                                                                        Widget>.generate(
+                                                                    60, (int
+                                                                        index) {
+                                                                  return Center(
+                                                                      child: Text(
+                                                                          '$index'));
+                                                                }),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          setState(() {
+                                                            initialSecond =
+                                                                selectedMinutes *
+                                                                        60 +
+                                                                    selectedSeconds;
+                                                            isShowingCountdownTimer =
+                                                                !isShowingCountdownTimer;
+                                                          });
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Text(
+                                                          'ok',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.blue,
+                                                              fontSize: 18.sp),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          }
+                                        },
+                                        child: Icon(
+                                          Icons.timer_sharp,
+                                          size: 40.sp,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 8.h),
+                                      child: TextButton(
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              WidgetStateProperty.all(
+                                            isShowingSubCounter1
+                                                ? CupertinoColors.activeGreen
+                                                : CupertinoColors.inactiveGray,
                                           ),
                                         ),
                                         onPressed: () {
                                           setState(() {
-                                            isShowingSubCounter1 = !isShowingSubCounter1;
+                                            isShowingSubCounter1 =
+                                                !isShowingSubCounter1;
                                           });
                                           Navigator.of(context).pop();
                                         },
@@ -187,16 +314,21 @@ class _DuelCounterState extends State<DuelCounter> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.symmetric(vertical: 8.h),
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 8.h),
                                       child: TextButton(
                                         style: ButtonStyle(
-                                          backgroundColor: WidgetStateProperty.all(
-                                            isShowingSubCounter2 ? CupertinoColors.activeGreen : CupertinoColors.inactiveGray,
+                                          backgroundColor:
+                                              WidgetStateProperty.all(
+                                            isShowingSubCounter2
+                                                ? CupertinoColors.activeGreen
+                                                : CupertinoColors.inactiveGray,
                                           ),
                                         ),
                                         onPressed: () {
                                           setState(() {
-                                            isShowingSubCounter2 = !isShowingSubCounter2;
+                                            isShowingSubCounter2 =
+                                                !isShowingSubCounter2;
                                           });
                                           Navigator.of(context).pop();
                                         },
@@ -213,7 +345,6 @@ class _DuelCounterState extends State<DuelCounter> {
                             },
                           );
 
-
                           timerKey.currentState?.resetTimer();
                           setState(() {
                             for (var player in _playerList) {
@@ -226,7 +357,7 @@ class _DuelCounterState extends State<DuelCounter> {
                         alignment: Alignment.center,
                         icon: Icon(
                           Icons.settings,
-                          size: 18.sp,
+                          size: 25.sp,
                           color: Colors.black38,
                         ),
                       ),
@@ -246,6 +377,12 @@ class _DuelCounterState extends State<DuelCounter> {
                 ),
               ),
             ),
+            if (isShowingCountdownTimer)
+              Positioned(
+                top: MediaQuery.of(context).size.height / 2 - 30.h, // 调整位置
+                right: 4.w, // 调整位置
+                child: CountdownTimerWidget(key: timerKey, initialSecond: initialSecond)
+              ),
           ],
         ),
       ),
