@@ -88,84 +88,49 @@ class _BasicCounterCardState extends State<BasicCounterCard> {
           child: Stack(
             children: [
               Positioned(
-                top: 15.h,
+                top: 5.h,
                 right: 70.w,
-                bottom: 0,
                 child: Container(
                     width: 45.w,
-                    height: 23.h,
-                    decoration: BoxDecoration(
-                        // border: Border.all(width: 3.w, color: Colors.black)
-                        // color: const Color(0xff233c4c),
-                        // borderRadius: BorderRadius.circular(10),
-                        ),
+                    height: 150.h,
+                    // decoration: BoxDecoration(
+                    //     border: Border.all(width: 3.w, color: Colors.black)
+                    //     ),
                     child: widget.player.scoreDetail.isEmpty
                         ? null
                         : AnimatedList(
-                            key: _animatedListKey,
-                            initialItemCount:
-                                widget.player.scoreDetail.length >= historyLength
-                                    ? historyLength
-                                    : widget.player.scoreDetail.length,
-                            itemBuilder: (context, index, animation) {
-                              return SlideTransition(
-                                position: animation.drive(
-                                  Tween<Offset>(
-                                    begin: const Offset(2, 0),
-                                    end: Offset.zero,
-                                  ).chain(CurveTween(curve: Curves.easeInOut)),
+                          padding: EdgeInsets.only(top: 5.h),
+                          key: _animatedListKey,
+                          initialItemCount:
+                              widget.player.scoreDetail.length >=
+                                      historyLength
+                                  ? historyLength
+                                  : widget.player.scoreDetail.length,
+                          itemBuilder: (context, index, animation) {
+                            return SlideTransition(
+                              position: animation.drive(
+                                Tween<Offset>(
+                                  begin: const Offset(2, 0),
+                                  end: Offset.zero,
+                                ).chain(
+                                    CurveTween(curve: Curves.easeInOut)),
+                              ),
+                              child: Text(
+                                widget.player.scoreDetail.length >=
+                                        historyLength
+                                    ? widget.player.scoreDetail[index +
+                                        widget.player.scoreDetail.length -
+                                        historyLength]
+                                    : widget.player.scoreDetail[index],
+                                style: CustomTextStyle.pressStart2pShadow
+                                    .copyWith(
+                                  fontSize: 10.sp,
+                                  color: Colors.amberAccent,
                                 ),
-                                child: Text(
-                                  widget.player.scoreDetail.length >=
-                                          historyLength
-                                      ? widget.player.scoreDetail[index +
-                                          widget.player.scoreDetail.length -
-                                          historyLength]
-                                      : widget.player.scoreDetail[index],
-                                  style:
-                                      CustomTextStyle.pressStart2pShadow.copyWith(
-                                    fontSize: 10.sp,
-                                    color: Colors.amberAccent,
-                                  ),
-                                ),
-                              );
-                            },
-                          )
-                    // child: ListView.builder(
-                    //   itemCount: widget.player.scoreDetail.length > historyLength
-                    //       ? historyLength
-                    //       : widget.player.scoreDetail.length, // 固定最多显示7个
-                    //   itemBuilder: (context, index) {
-                    //     // 如果列表长度大于7，显示最后的7个
-                    //     final displayIndex =
-                    //         widget.player.scoreDetail.length > historyLength
-                    //             ? widget.player.scoreDetail.length -
-                    //                 historyLength +
-                    //                 index
-                    //             : index;
-                    //     return Container(
-                    //       margin: EdgeInsets.only(bottom: 2.h),
-                    //       child: AnimatedSwitcher(
-                    //         duration: const Duration(milliseconds: 1000),
-                    //         transitionBuilder:
-                    //             (Widget child, Animation<double> animation) {
-                    //           return ScaleTransition(
-                    //             scale: animation, child: child);
-                    //         },
-                    //         child: Text(
-                    //           widget.player.scoreDetail[displayIndex],
-                    //           key: ValueKey(
-                    //               widget.player.scoreDetail[displayIndex]),
-                    //           style: CustomTextStyle.pressStart2pShadow.copyWith(
-                    //             fontSize: 10.sp,
-                    //             color: Colors.amberAccent,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     );
-                    //   },
-                    // )
-                    ),
+                              ),
+                            );
+                          },
+                        )),
               ),
               Stack(
                 children: [

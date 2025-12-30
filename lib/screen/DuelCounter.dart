@@ -223,28 +223,23 @@ class _DuelCounterState extends State<DuelCounter> {
                                                             Text(":",
                                                                 style: TextStyle(
                                                                     fontSize:
-                                                                        18.sp,
+                                                                        28.sp,
                                                                     color: Colors
                                                                         .black)),
                                                             Expanded(
-                                                              child:
-                                                                  CupertinoPicker(
-                                                                itemExtent:
-                                                                    32.0,
-                                                                onSelectedItemChanged:
-                                                                    (int
-                                                                        index) {
-                                                                  selectedSeconds =
-                                                                      index;
+                                                              child: CupertinoPicker(
+                                                                itemExtent: 32.0,
+                                                                onSelectedItemChanged: (int index) {
+                                                                  selectedSeconds = index * 5;
                                                                 },
-                                                                children: List<
-                                                                        Widget>.generate(
-                                                                    60, (int
-                                                                        index) {
-                                                                  return Center(
-                                                                      child: Text(
-                                                                          '$index'));
-                                                                }),
+                                                                children: List<Widget>.generate(
+                                                                  12, // 每5秒一个间隔，总共12个选项（0到55秒）
+                                                                      (int index) {
+                                                                    return Center(
+                                                                      child: Text('${index * 5}'),
+                                                                    );
+                                                                  },
+                                                                ),
                                                               ),
                                                             ),
                                                           ],
@@ -265,12 +260,18 @@ class _DuelCounterState extends State<DuelCounter> {
                                                           Navigator.of(context)
                                                               .pop();
                                                         },
+                                                        style: ButtonStyle(
+                                                          minimumSize: WidgetStateProperty.all(Size(100.w, 50.h)), // 设置按钮的最小尺寸
+                                                          backgroundColor:
+                                                              WidgetStateProperty.all(
+                                                                  CupertinoColors.activeGreen),
+                                                        ),
                                                         child: Text(
                                                           'ok',
                                                           style: TextStyle(
                                                               color:
-                                                                  Colors.blue,
-                                                              fontSize: 18.sp),
+                                                                  Colors.white,
+                                                              fontSize: 28.sp),
                                                         ),
                                                       ),
                                                     ],
