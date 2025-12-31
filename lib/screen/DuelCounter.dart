@@ -191,12 +191,12 @@ class _DuelCounterState extends State<DuelCounter> {
                                                 int selectedMinutes = 0;
                                                 int selectedSeconds = 0;
                                                 return Container(
-                                                  height: 250.h,
+                                                  height: 500.h,
                                                   color: Colors.white,
                                                   child: Column(
                                                     children: [
                                                       SizedBox(
-                                                        height: 200.h,
+                                                        height: 400.h,
                                                         child: Row(
                                                           children: [
                                                             Expanded(
