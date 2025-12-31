@@ -481,6 +481,7 @@ class _BasicCounterState extends State<BasicCounter> {
                                     player: _playerList[index],
                                     isShowSubCounter1: isShowingSubCounter1,
                                     isShowSubCounter2: isShowingSubCounter2,
+                                    isShowTimer: isShowingTimer||isShowingCountdownTimer,
                                     length: _playerList.length,
                                     callback: (player) {
                                       setState(() {
@@ -546,6 +547,7 @@ class _BasicCounterState extends State<BasicCounter> {
                                       player: _playerList[index],
                                       isShowSubCounter1: isShowingSubCounter1,
                                       isShowSubCounter2: isShowingSubCounter2,
+                                      isShowTimer: isShowingTimer||isShowingCountdownTimer,
                                       length: _playerList.length,
                                       callback: (player) {
                                         setState(() {
@@ -568,6 +570,7 @@ class _BasicCounterState extends State<BasicCounter> {
                                                     isShowingSubCounter1,
                                                 isShowSubCounter2:
                                                     isShowingSubCounter2,
+                                                isShowTimer: isShowingTimer || isShowingCountdownTimer,
                                                 length: _playerList.length,
                                                 callback: (player) {},
                                               ),

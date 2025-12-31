@@ -16,6 +16,7 @@ class BasicCounterCard extends StatefulWidget {
   Function callback;
   bool isShowSubCounter1;
   bool isShowSubCounter2;
+  bool isShowTimer;
 
   BasicCounterCard({
     super.key,
@@ -24,6 +25,7 @@ class BasicCounterCard extends StatefulWidget {
     required this.length,
     required this.isShowSubCounter1,
     required this.isShowSubCounter2,
+    required this.isShowTimer,
   });
 
   @override
@@ -72,7 +74,7 @@ class _BasicCounterCardState extends State<BasicCounterCard> {
     return Padding(
       padding: EdgeInsets.only(top: 6.h,bottom: 6.h, left: 10.w, right: 10.w),
       child: Container(
-          height: 160.h,
+          height: widget.isShowTimer ? 150.h :160.h,
           decoration: BoxDecoration(
             // color: const Color(0xffb44f33),
             color: widget.player.color,
