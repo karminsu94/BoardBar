@@ -443,9 +443,9 @@ class _BasicCounterState extends State<BasicCounter> {
                   Center(
                     child: Container(
                         decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Color(0xff233c4c), width: 5.w),
-                            color: Color(0xff326171)),
+                            border: Border.all(color: Colors.black87, width: 4.w),
+                            borderRadius: BorderRadius.all(Radius.circular(12.r)),
+                            color: Colors.white),
                         margin: EdgeInsets.only(bottom: 1.h),
                         width: 250.w,
                         child: _timerWidget),

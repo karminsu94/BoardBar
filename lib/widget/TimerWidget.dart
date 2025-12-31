@@ -103,7 +103,7 @@ class TimerWidgetState extends State<TimerWidget> {
           style: CustomTextStyle.pressStart2p.copyWith(
             fontWeight: FontWeight.w300,
             fontSize: 23.sp,
-            color: Colors.white70,
+            color: Colors.black,
           ),
         ),
         Row(

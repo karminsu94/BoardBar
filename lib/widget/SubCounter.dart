@@ -1,12 +1,9 @@
 import 'package:board_bar/widget/FloatingTextDuel.dart';
-import 'package:board_bar/widget/JumpingMan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../model/Player.dart';
 import '../style/CustomTextStyle.dart';
-import 'SimpleCalculator.dart';
-import 'package:vibration/vibration.dart';
 
 import 'dart:math';
 
@@ -103,19 +100,17 @@ class _SubCounterState extends State<SubCounter> with SingleTickerProviderStateM
         _hasSwipedDown = false; // 重置标志，允许下一次下滑操作
       },
 
-      child: Expanded(
-        child: Container(
-          color: Colors.transparent,
-          child: Center(
-            child: Text('${widget.type == 1 ? widget.player.subScore1 : widget.player.subScore2}',
-                style: CustomTextStyle.pressStart2p
-                    .copyWith(
-                    fontSize: widget.player.subScore1.toString()
-                        .length >= 3
-                        ? widget.fontSize.sp
-                        : (widget.fontSize+4).sp,
-                    color: widget.textColor)),
-          ),
+      child: Container(
+        color: Colors.transparent,
+        child: Center(
+          child: Text('${widget.type == 1 ? widget.player.subScore1 : widget.player.subScore2}',
+              style: CustomTextStyle.pressStart2p
+                  .copyWith(
+                  fontSize: widget.player.subScore1.toString()
+                      .length >= 3
+                      ? widget.fontSize.sp
+                      : (widget.fontSize+4).sp,
+                  color: widget.textColor)),
         ),
       ),
     );
