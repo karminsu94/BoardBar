@@ -63,7 +63,7 @@ class FloatingTextState extends State<FloatingText>
       child: SlideTransition(
         position: _positionAnimation,
         child: SizedBox(
-          width: 150.w,
+          width: 160.w,
           child: Center(
             child: Text(
               widget.text,

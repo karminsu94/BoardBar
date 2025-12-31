@@ -436,10 +436,10 @@ class _DuelCounterCardState extends State<DuelCounterCard> with SingleTickerProv
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       GestureDetector(
-                          onTap: () async {
-                            if (await Vibration.hasVibrator()) {
-                              Vibration.vibrate();
-                            }
+                          onTap: () {
+                            // if (await Vibration.hasVibrator()) {
+                            //   Vibration.vibrate();
+                            // }
                             setState(() {
                               widget.player.score = widget.player.score + 10;
                               widget.player.scoreDetail.add("+10");
@@ -454,10 +454,10 @@ class _DuelCounterCardState extends State<DuelCounterCard> with SingleTickerProv
                             fit: BoxFit.fitWidth,
                           )),
                       GestureDetector(
-                        onTap: () async {
-                          if (await Vibration.hasVibrator()) {
-                            Vibration.vibrate();
-                          }
+                        onTap: ()  {
+                          // if (await Vibration.hasVibrator()) {
+                          //   Vibration.vibrate();
+                          // }
                           setState(() {
                             widget.player.score = widget.player.score + 5;
                             widget.player.scoreDetail.add("+5");
