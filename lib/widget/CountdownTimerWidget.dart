@@ -89,7 +89,7 @@ class CountdownTimerWidgetState extends State<CountdownTimerWidget> {
         });
         _toggleBackgroundColor(); // 递归调用实现循环动画
       });
-    }else{
+    } else {
       setState(() {
         _backgroundColor = Colors.white; // 恢复默认背景颜色
       });
@@ -128,16 +128,7 @@ class CountdownTimerWidgetState extends State<CountdownTimerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      width: 135.w,
-      height: 60.h,
-      duration: Duration(milliseconds: 500), // 动画持续时间
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.black87, width: 4.w),
-        borderRadius: BorderRadius.all(Radius.circular(12.r)),
-        color: _backgroundColor, // 动态背景颜色
-      ),
-      child: GestureDetector(
+    return GestureDetector(
         onTapDown: (_) {
           setState(() {
             _scale = 0.9; // 缩小
@@ -154,22 +145,31 @@ class CountdownTimerWidgetState extends State<CountdownTimerWidget> {
             _scale = 1.0; // 恢复
           });
         },
-        child: AnimatedScale(
-          scale: _scale,
-          duration: Duration(milliseconds: 100),
-          child: Center(
-            child: Text(
-              _showColon
-                  ? _formatTime(_remainingSeconds)
-                  : _formatTime(_remainingSeconds).replaceAll(':', ' '),
-              style: CustomTextStyle.pressStart2p.copyWith(
-                fontSize: 25.sp,
-                color: Colors.black,
+        child: AnimatedContainer(
+          width: 135.w,
+          height: 60.h,
+          duration: Duration(milliseconds: 500),
+          // 动画持续时间
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black87, width: 4.w),
+            borderRadius: BorderRadius.all(Radius.circular(12.r)),
+            color: _backgroundColor, // 动态背景颜色
+          ),
+          child: AnimatedScale(
+            scale: _scale,
+            duration: Duration(milliseconds: 100),
+            child: Center(
+              child: Text(
+                _showColon
+                    ? _formatTime(_remainingSeconds)
+                    : _formatTime(_remainingSeconds).replaceAll(':', ' '),
+                style: CustomTextStyle.pressStart2p.copyWith(
+                  fontSize: 25.sp,
+                  color: Colors.black,
+                ),
               ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
