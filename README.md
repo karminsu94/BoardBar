@@ -2,6 +2,9 @@
 
 A Side Bar for board game scoring!
 
+![IMG_3497](https://github.com/user-attachments/assets/7c3c180e-f110-464e-a1f2-e1e7da41fea4)
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
