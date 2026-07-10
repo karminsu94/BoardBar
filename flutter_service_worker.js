@@ -3,9 +3,9 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"assets/AssetManifest.bin": "cab3f18251b5d9b1856b955328433426",
-"assets/AssetManifest.bin.json": "e7cbbc923991bb1d961a6feba885d65d",
-"assets/AssetManifest.json": "69fe1fc71ca6cdce4fdb79250e1f8572",
+const RESOURCES = {"assets/AssetManifest.bin": "470f5879fdc274aeb54a35101c02e1d2",
+"assets/AssetManifest.bin.json": "e9fa320338215880acedf4dde410fafc",
+"assets/AssetManifest.json": "e0ec019bd9de2b25b7248d91e3e1c30c",
 "assets/assets/audio/minus1.MP3": "300d0ccf33b917d52349fd4a7b788c7e",
 "assets/assets/audio/minus5-10.MP3": "52ee2eed857187efdb726afe61210b4f",
 "assets/assets/audio/plus1.MP3": "0d2796fef0b035a97cc74c7386a308ab",
@@ -60,6 +60,10 @@ const RESOURCES = {"assets/AssetManifest.bin": "cab3f18251b5d9b1856b955328433426
 "assets/assets/scriptIcon/puertoRico-3.png": "41181b18824dd8958af2d5225f4cbf6d",
 "assets/assets/scriptIcon/puertoRico-4.png": "06ada7d5dd4b661ce24214c0eeb75357",
 "assets/assets/scriptIcon/puertoRico-5.png": "ffb09f6f21f69bf87c61190de197919d",
+"assets/assets/scriptIcon/season-1.png": "e2e5a0146a1f9c5a7128ffb41887d16d",
+"assets/assets/scriptIcon/season-2.png": "91c20681a237998c79c78cb0d90277d0",
+"assets/assets/scriptIcon/season-3.png": "157d92431a322ff0be1e901b12170964",
+"assets/assets/scriptIcon/season-4.png": "4a6c2e16811f4b0de659c5a1eedc09d2",
 "assets/assets/scriptIcon/theWhiteCastle-1.png": "ec8716abb27f0f66540fdb27a13137fc",
 "assets/assets/scriptIcon/theWhiteCastle-2.png": "2e233203084b28aacd4663bde461b1c7",
 "assets/assets/scriptIcon/theWhiteCastle-3.png": "b437265e5b236afd530f3c25d64abac7",
@@ -87,14 +91,14 @@ const RESOURCES = {"assets/AssetManifest.bin": "cab3f18251b5d9b1856b955328433426
 "canvaskit/skwasm_heavy.wasm": "8034ad26ba2485dab2fd49bdd786837b",
 "favicon.png": "fcb4c59db7b219c0a7ee388e5b9c5a5b",
 "flutter.js": "888483df48293866f9f41d3d9274a779",
-"flutter_bootstrap.js": "c2c1cd34551a7fd0b06b72d628665c76",
+"flutter_bootstrap.js": "18395e88b536220656e5f6cc69bb4744",
 "icons/Icon-192.png": "aa83ae936d61ac8b515c03f3df698c13",
 "icons/Icon-512.png": "59c93663d40f22208efdf6137e4a9d6b",
 "icons/Icon-maskable-192.png": "aa83ae936d61ac8b515c03f3df698c13",
 "icons/Icon-maskable-512.png": "59c93663d40f22208efdf6137e4a9d6b",
 "index.html": "d2c35a1355aa2187e7a5e929249e3053",
 "/": "d2c35a1355aa2187e7a5e929249e3053",
-"main.dart.js": "f842b7a22b607c9d6590eece01456436",
+"main.dart.js": "7904ec04006fac4bbda6cf2a5071c8aa",
 "manifest.json": "9484cc808e5d1af86043e5fa0a4aee28",
 "version.json": "411755d3f8aa3738da1fa070215e5db1"};
 // The application shell files that are downloaded before a service worker can
