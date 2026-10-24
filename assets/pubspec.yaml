@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 3.1.1+1
+version: 3.3.0+1
 
 environment:
   sdk: ^3.6.2
@@ -58,6 +58,8 @@ dependencies:
   easy_localization: ^3.0.8
   flutter_localizations:
     sdk: flutter
+  # ===== 局域网资料录入：主端生成二维码，同桌扫码填资料 =====
+  qr_flutter: ^4.1.0
 
 
 
@@ -108,6 +110,8 @@ flutter:
     - assets/scriptIcon/
     - assets/audio/
     - assets/translations/
+    # 局域网资料录入的客人端页面：原生端由 HTTP 服务吐出，网页版由二维码直接指向这里
+    - assets/guest_entry.html
     - pubspec.yaml
   fonts:
 #    - family: HYPixel11pxU
