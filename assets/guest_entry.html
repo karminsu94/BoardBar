@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f9e0b2">
+<title>玩家资料录入</title>
+<style>
+  :root{
+    --bg:#f9e0b2; --paper:#fffdf6; --ink:#3b2b1d; --line:#2b1d12;
+    --gold:#ffc857; --teal:#4f9e8a; --cream:#fff6cf; --red:#d9534f;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    background-image:radial-gradient(circle at 12px 12px, rgba(0,0,0,.045) 2px, transparent 2px);
+    background-size:24px 24px;
+    color:var(--ink);
+    font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",-apple-system,system-ui,sans-serif;
+    font-size:15px; line-height:1.5;
+    padding:16px 14px 40px;
+  }
+  .card{
+    max-width:520px;margin:0 auto;background:var(--paper);
+    border:3px solid var(--line);border-radius:14px;
+    box-shadow:0 6px 0 var(--line);
+    padding:18px 16px 20px;
+  }
+  h1{
+    margin:0 0 4px;font-size:19px;letter-spacing:.5px;
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  }
+  h1 .pin{
+    font-size:11px;background:var(--cream);border:2px solid var(--line);
+    border-radius:999px;padding:2px 9px;letter-spacing:.3px;
+  }
+  .sub{margin:0 0 14px;font-size:12.5px;color:#8a7259}
+  .lbl{
+    display:block;margin:16px 0 7px;font-size:13px;font-weight:700;letter-spacing:.4px;
+  }
+  input[type=text]{
+    width:100%;padding:11px 12px;font-size:15px;font-family:inherit;color:var(--ink);
+    background:#fff;border:2px solid var(--line);border-radius:10px;outline:none;
+  }
+  input[type=text]:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(79,158,138,.18)}
+  .grid{display:flex;flex-wrap:wrap;gap:8px}
+  .emo{
+    width:46px;height:46px;display:flex;align-items:center;justify-content:center;
+    font-size:26px;background:#fff;border:2px solid var(--line);border-radius:12px;
+    cursor:pointer;transition:transform .08s;
+  }
+  .emo:active{transform:scale(.92)}
+  .emo.on{background:var(--cream);border-width:3px;box-shadow:0 0 0 2px var(--gold)}
+  .csw{
+    width:38px;height:38px;border-radius:50%;border:3px solid var(--line);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;transition:transform .08s;
+  }
+  .csw:active{transform:scale(.9)}
+  .csw.on{box-shadow:0 0 0 3px #fff,0 0 0 6px var(--line)}
+  .row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .avatar{
+    width:64px;height:64px;border-radius:50%;border:3px solid var(--line);
+    background:var(--cream);display:flex;align-items:center;justify-content:center;
+    font-size:32px;overflow:hidden;flex:none;
+  }
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+  .btn{
+    font-family:inherit;font-size:13px;font-weight:700;color:var(--ink);
+    background:var(--cream);border:2px solid var(--line);border-radius:10px;
+    padding:8px 14px;cursor:pointer;box-shadow:0 2px 0 var(--line);
+  }
+  .btn:active{transform:translateY(2px);box-shadow:none}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;min-height:10px}
+  .chip{
+    font-size:13px;background:var(--teal);color:#fff;border:2px solid var(--line);
+    border-radius:999px;padding:4px 8px 4px 10px;display:flex;align-items:center;gap:6px;
+  }
+  .chip b{
+    cursor:pointer;font-weight:700;background:rgba(255,255,255,.28);
+    border-radius:50%;width:17px;height:17px;display:flex;align-items:center;justify-content:center;
+    font-size:11px;line-height:1;
+  }
+  .preset{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
+  .pchip{
+    font-size:12.5px;background:#fff;border:2px dashed #b9a68d;border-radius:999px;
+    padding:4px 10px;cursor:pointer;color:#7a6552;
+  }
+  .submit{
+    width:100%;margin-top:20px;padding:14px;font-size:16px;font-weight:800;
+    font-family:inherit;letter-spacing:1px;color:var(--ink);
+    background:var(--gold);border:3px solid var(--line);border-radius:12px;
+    box-shadow:0 4px 0 var(--line);cursor:pointer;
+  }
+  .submit:active{transform:translateY(4px);box-shadow:none}
+  .submit[disabled]{opacity:.55;cursor:default}
+  .msg{
+    margin-top:12px;font-size:13.5px;text-align:center;min-height:20px;font-weight:700;
+  }
+  .msg.ok{color:#2f7a5b}.msg.err{color:var(--red)}
+  .done{
+    text-align:center;padding:24px 8px;
+  }
+  .done .big{font-size:52px;line-height:1;margin-bottom:8px}
+  .foot{margin-top:14px;text-align:center;font-size:11.5px;color:#a2907a}
+  hr.stitch{border:0;border-top:2px dashed #d8c3a3;margin:18px 0 0}
+
+  /* ===== 头像裁剪弹窗：拖动移动 + 滑块缩放，圆形裁出 128×128（与 App 内一致） ===== */
+  .modal{
+    position:fixed;left:0;top:0;right:0;bottom:0;z-index:50;
+    background:rgba(35,24,14,.62);
+    display:flex;align-items:center;justify-content:center;padding:16px;
+  }
+  .modal[hidden]{display:none}
+  .modal-card{
+    width:100%;max-width:360px;background:var(--paper);
+    border:3px solid var(--line);border-radius:14px;box-shadow:0 6px 0 var(--line);
+    padding:16px 14px 14px;
+  }
+  .modal-card h2{margin:0 0 12px;font-size:16px;text-align:center;letter-spacing:.5px}
+  .crop-stage{
+    position:relative;width:250px;height:250px;margin:0 auto;
+    overflow:hidden;background:#efe4d2;border:2px solid var(--line);border-radius:10px;
+    touch-action:none;cursor:grab;
+    -webkit-user-select:none;user-select:none;
+  }
+  .crop-stage:active{cursor:grabbing}
+  .crop-img{position:absolute;left:0;top:0;display:block;pointer-events:none}
+  /* 圆形取景区：圆内是要保留的，圆外用一圈巨大的 box-shadow 压暗（被 overflow 裁掉多余部分） */
+  .crop-mask{
+    position:absolute;left:0;top:0;right:0;bottom:0;pointer-events:none;
+    border-radius:50%;border:2px solid rgba(255,255,255,.92);
+    box-shadow:0 0 0 9999px rgba(0,0,0,.5);
+  }
+  .crop-zoom{display:flex;align-items:center;gap:10px;margin:14px 2px 0}
+  .crop-zoom span{flex:none;font-size:16px;font-weight:700;color:#7a6552}
+  .crop-zoom input[type=range]{
+    flex:1;min-width:0;height:6px;border-radius:999px;background:#e6d7bf;
+    outline:none;-webkit-appearance:none;appearance:none;
+  }
+  .crop-zoom input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;
+    background:var(--gold);border:2px solid var(--line);cursor:pointer;
+  }
+  .crop-zoom input[type=range]::-moz-range-thumb{
+    width:22px;height:22px;border-radius:50%;border:2px solid var(--line);
+    background:var(--gold);cursor:pointer;
+  }
+  .crop-tip{text-align:center;font-size:11.5px;color:#9a8570;margin-top:6px}
+  .modal-actions{display:flex;gap:10px;margin-top:14px}
+  .modal-actions .btn{flex:1;padding:11px 8px;font-size:14px}
+  .modal-actions .btn.primary{background:var(--gold)}
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <h1><span id="tTitle">📇 玩家资料录入</span><span class="pin" id="tMode">—</span></h1>
+  <p class="sub" id="tSub">填好后提交，主机端会收到你的资料</p>
+
+  <label class="lbl" for="name" id="tNameLbl">昵称 *</label>
+  <input type="text" id="name" maxlength="12" placeholder="桌友平时怎么称呼你" autocomplete="off">
+
+  <label class="lbl" id="tEmojiLbl">选个头像（可选）</label>
+  <div class="grid" id="emojiGrid"></div>
+
+  <div class="row" style="margin-top:12px">
+    <div class="avatar" id="avatarPreview"><span id="avEmoji">🙂</span></div>
+    <div style="flex:1;min-width:150px">
+      <button class="btn" id="pickBtn" type="button">📷 <span id="tUpload">上传头像</span></button>
+      <button class="btn" id="clearBtn" type="button" style="margin-left:6px">↩️ <span id="tUseEmoji">用 emoji</span></button>
+      <input type="file" id="file" accept="image/*" hidden>
+      <div style="font-size:11.5px;color:#9a8570;margin-top:6px" id="tAvatarTip">可裁成 128×128 圆形</div>
+    </div>
+  </div>
+
+  <label class="lbl" id="tColorLbl">主题色</label>
+  <div class="grid" id="colorGrid"></div>
+
+  <label class="lbl" id="tImpLbl">印象标签（可选，最多 4 条）</label>
+  <div class="chips" id="impList"></div>
+  <div class="row" style="margin-top:9px">
+    <input type="text" id="impInput" maxlength="10" placeholder="例如：运气爆棚" autocomplete="off" style="flex:1;min-width:120px">
+    <button class="btn" id="impAdd" type="button">＋</button>
+  </div>
+  <div class="preset" id="preset"></div>
+
+  <button class="submit" id="submit" type="button">✅ <span id="tSubmit">提交给主机</span></button>
+  <div class="msg" id="msg"></div>
+  <hr class="stitch">
+  <div class="foot" id="foot"></div>
+</div>
+
+<div class="modal" id="cropModal" hidden>
+  <div class="modal-card">
+    <h2 id="cropTitle">调整头像</h2>
+    <div class="crop-stage" id="cropStage">
+      <img class="crop-img" id="cropImg" alt="">
+      <div class="crop-mask"></div>
+    </div>
+    <div class="crop-zoom">
+      <span>&#xff0d;</span>
+      <input type="range" id="cropRange" min="100" max="400" step="1" value="100">
+      <span>&#xff0b;</span>
+    </div>
+    <div class="crop-tip" id="cropTip">拖动移动，滑块缩放</div>
+    <div class="modal-actions">
+      <button class="btn" id="cropCancel" type="button">取消</button>
+      <button class="btn primary" id="cropOk" type="button">确定</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   玩家资料录入页（客人端）
+   —— 单文件、零外部依赖。两种回传模式由 URL 决定：
+      1) 带 ?t=<topic>&b=<broker wss 地址>  → MQTT over WSS（网页版主机走公网中转）
+      2) 不带参数                          → 直接 POST /api/submit（原生端主机，纯局域网）
+   颜色表与 App 内 Colors.primaries 一一对应（取各自 500 主色）。
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var EMOJIS = ['🐴','🐶','🐒','🐹','🐺','🐝','🦖','🐙','🦎','🐌',
+                '🐞','🐍','🦐','🦑','🦕','🐢','🦞','🦉','🦋','🦀'];
+  // Colors.primaries 的 18 个 500 主色
+  var COLORS = [
+    0xFFF44336, 0xFFE91E63, 0xFF9C27B0, 0xFF673AB7, 0xFF3F51B5, 0xFF2196F3,
+    0xFF03A9F4, 0xFF00BCD4, 0xFF009688, 0xFF4CAF50, 0xFF8BC34A, 0xFFCDDC39,
+    0xFFFFEB3B, 0xFFFFC107, 0xFFFF9800, 0xFFFF5722, 0xFF795548, 0xFF607D8B
+  ];
+  var PRESET_IMP = ['运气爆棚','老谋深算','桌游新手','稳如老狗','嘴强王者','慢热型','细节控','常胜将军'];
+
+  var STR = {
+    zh: {
+      title:'📇 玩家资料录入', sub:'填好后提交，主机端会收到你的资料',
+      name:'昵称 *', emoji:'选个头像（可选）', upload:'上传头像', useEmoji:'用 emoji',
+      tip:'图片会自动裁成 128×128 圆形', color:'主题色',
+      imp:'印象标签（可选，最多 4 条）', submit:'提交给主机',
+      phName:'桌友平时怎么称呼你', phImp:'例如：运气爆棚',
+      lanMode:'局域网直连', relayMode:'云端中转',
+      needName:'请填写昵称', tooMany:'印象最多 4 条',
+      sending:'正在提交…', ok:'提交成功！主机端已收到，等主持人确认 ✅',
+      okAgain:'已收到，你可以继续提交下一位 ✅',
+      errNet:'网络不通，请靠近主机或检查同一 WiFi',
+      errSrv:'提交失败（' , foot:'提交后请等待主持人勾选确认 · 数据只用于本局记分',
+      doneTitle:'已送达 🎉', doneSub:'你的资料已经出现在主机端，等主持人勾选保存。',
+      again:'再录一位',
+      cropTitle:'调整头像', cropTip:'拖动移动，滑块缩放', cancel:'取消', confirm:'确定'
+    },
+    en: {
+      title:'📇 Player Sign-up', sub:'Fill this in and the host will receive your profile',
+      name:'Nickname *', emoji:'Pick an avatar (optional)', upload:'Upload photo', useEmoji:'Use emoji',
+      tip:'Photos are cropped to 128×128', color:'Theme color',
+      imp:'Impression tags (optional, max 4)', submit:'Send to host',
+      phName:'What do your friends call you', phImp:'e.g. Lucky one',
+      lanMode:'LAN direct', relayMode:'Cloud relay',
+      needName:'Please enter a nickname', tooMany:'Max 4 impression tags',
+      sending:'Sending…', ok:'Sent! The host received it, waiting for confirmation ✅',
+      okAgain:'Received — you can add another player ✅',
+      errNet:'Network unreachable — move closer to the host or check the WiFi',
+      errSrv:'Send failed (', foot:'Wait for the host to confirm · data is used for scoring only',
+      doneTitle:'Delivered 🎉', doneSub:'Your profile is on the host now, waiting to be saved.',
+      again:'Add another',
+      cropTitle:'Adjust photo', cropTip:'Drag to move, slide to zoom', cancel:'Cancel', confirm:'Done'
+    }
+  };
+
+  var qs = new URLSearchParams(location.search);
+  var TOPIC = qs.get('t') || '';
+  var BROKER = qs.get('b') || '';
+  var RELAY = !!TOPIC;
+  var L = (qs.get('lang') || (navigator.language || 'zh').toLowerCase()).indexOf('en') === 0
+      ? STR.en : STR.zh;
+  var T = function (k) { return L[k] || ''; };
+
+  // ---------- 文案上屏 ----------
+  function setText(id, v) { var e = document.getElementById(id); if (e) e.textContent = v; }
+  setText('tTitle', T('title'));
+  setText('tSub', T('sub'));
+  setText('tMode', RELAY ? T('relayMode') : T('lanMode'));
+  setText('tNameLbl', T('name'));
+  setText('tEmojiLbl', T('emoji'));
+  setText('tUpload', T('upload'));
+  setText('tUseEmoji', T('useEmoji'));
+  setText('tAvatarTip', T('tip'));
+  setText('tColorLbl', T('color'));
+  setText('tImpLbl', T('imp'));
+  setText('tSubmit', T('submit'));
+  setText('foot', T('foot'));
+  setText('cropTitle', T('cropTitle'));
+  setText('cropTip', T('cropTip'));
+  setText('cropCancel', T('cancel'));
+  setText('cropOk', T('confirm'));
+  document.getElementById('name').placeholder = T('phName');
+  document.getElementById('impInput').placeholder = T('phImp');
+
+  // ---------- 状态 ----------
+  var state = {
+    name: '',
+    emoji: EMOJIS[Math.floor(Math.random() * EMOJIS.length)],
+    color: COLORS[Math.floor(Math.random() * COLORS.length)],
+    avatar: '',            // base64 dataURL，空表示用 emoji
+    imps: []
+  };
+
+  var $ = function (id) { return document.getElementById(id); };
+  var msgEl = $('msg');
+  function say(text, cls) {
+    msgEl.textContent = text;
+    msgEl.className = 'msg' + (cls ? ' ' + cls : '');
+  }
+
+  // ---------- 头像 ----------
+  var avBox = $('avatarPreview');
+  var avEmoji = $('avEmoji');
+  function renderAvatar() {
+    avBox.innerHTML = '';
+    if (state.avatar) {
+      var im = document.createElement('img');
+      im.src = state.avatar;
+      avBox.appendChild(im);
+    } else {
+      var s = document.createElement('span');
+      s.textContent = state.emoji;
+      s.style.fontSize = '32px';
+      avBox.appendChild(s);
+    }
+    avBox.style.borderColor = '#' + (state.color & 0xFFFFFF).toString(16).padStart(6, '0');
+  }
+
+  // ⚠️ 重建列表前必须先清空容器：这些函数会在每次点击时被调用，
+  // 少了这一句就会在原有的基础上再 append 一整组，越点越多（emoji / 色块同理）。
+  function buildEmoji() {
+    var g = $('emojiGrid');
+    g.innerHTML = '';
+    EMOJIS.forEach(function (e) {
+      var d = document.createElement('div');
+      d.className = 'emo' + (e === state.emoji ? ' on' : '');
+      d.textContent = e;
+      d.onclick = function () {
+        state.emoji = e;
+        state.avatar = '';
+        buildEmoji();
+        renderAvatar();
+      };
+      g.appendChild(d);
+    });
+  }
+
+  function buildColors() {
+    var g = $('colorGrid');
+    g.innerHTML = '';
+    COLORS.forEach(function (c) {
+      var hex = '#' + (c & 0xFFFFFF).toString(16).padStart(6, '0');
+      var d = document.createElement('div');
+      d.className = 'csw' + (c === state.color ? ' on' : '');
+      d.style.background = hex;
+      d.onclick = function () { state.color = c; buildColors(); renderAvatar(); };
+      g.appendChild(d);
+    });
+  }
+
+  function buildImps() {
+    var box = $('impList');
+    box.innerHTML = '';
+    state.imps.forEach(function (t, i) {
+      var c = document.createElement('div');
+      c.className = 'chip';
+      c.appendChild(document.createTextNode(t));
+      var x = document.createElement('b');
+      x.textContent = '×';
+      x.onclick = function () { state.imps.splice(i, 1); buildImps(); };
+      c.appendChild(x);
+      box.appendChild(c);
+    });
+  }
+
+  function buildPreset() {
+    var box = $('preset');
+    box.innerHTML = '';
+    PRESET_IMP.forEach(function (t) {
+      var c = document.createElement('div');
+      c.className = 'pchip';
+      c.textContent = '＋ ' + t;
+      c.onclick = function () {
+        if (state.imps.length >= 4 || state.imps.indexOf(t) >= 0) return;
+        state.imps.push(t);
+        buildImps();
+      };
+      box.appendChild(c);
+    });
+  }
+
+  $('impAdd').onclick = function () {
+    var v = $('impInput').value.trim();
+    if (!v) return;
+    if (state.imps.length >= 4) { say(T('tooMany'), 'err'); return; }
+    if (state.imps.indexOf(v) < 0) state.imps.push(v);
+    $('impInput').value = '';
+    buildImps();
+  };
+  $('impInput').addEventListener('keydown', function (ev) {
+    if (ev.key === 'Enter') { ev.preventDefault(); $('impAdd').click(); }
+  });
+
+  $('pickBtn').onclick = function () { $('file').click(); };
+  $('clearBtn').onclick = function () { state.avatar = ''; renderAvatar(); };
+  $('file').onchange = function (ev) {
+    var f = ev.target.files && ev.target.files[0];
+    ev.target.value = '';
+    if (!f) return;
+    var fr = new FileReader();
+    fr.onload = function () {
+      openCropper(fr.result, function (out) {
+        if (!out) return;
+        state.avatar = out;
+        renderAvatar();
+      });
+    };
+    fr.readAsDataURL(f);
+  };
+
+  /* ============================================================
+     头像裁剪：选完图先弹窗，可拖动移动 + 滑块缩放，圆形取景，
+     确认时按当前取景区裁出 128×128 PNG（与 App 内 EmojiPicker 的规格一致）。
+     ============================================================ */
+  var OUT_SIZE = 128;
+  var crop = { img: null, view: 250, base: 1, zoom: 1, ox: 0, oy: 0, done: null };
+
+  function openCropper(dataUrl, done) {
+    crop.zoom = 1; crop.ox = 0; crop.oy = 0; crop.done = done;
+    $('cropRange').value = '100';
+    $('cropModal').hidden = false;
+    var im = new Image();
+    im.onload = function () {
+      crop.img = im;
+      crop.view = $('cropStage').clientWidth || 250;
+      // 基准缩放用 cover：保证图片铺满取景区，不会出现露白的边
+      crop.base = Math.max(crop.view / im.naturalWidth,
+                           crop.view / im.naturalHeight);
+      var el = $('cropImg');
+      el.src = dataUrl;
+      applyCrop();
+    };
+    im.onerror = function () { closeCropper(); };
+    im.src = dataUrl;
+  }
+
+  function closeCropper() {
+    $('cropModal').hidden = true;
+    $('cropImg').src = '';
+    crop.img = null;
+    crop.done = null;
+  }
+
+  /** 图片当前显示尺寸（CSS px）。 */
+  function dispSize() {
+    var s = crop.base * crop.zoom;
+    return { s: s, w: crop.img.naturalWidth * s, h: crop.img.naturalHeight * s };
+  }
+
+  function applyCrop() {
+    if (!crop.img) return;
+    var d = dispSize();
+    // 允许的偏移范围：取景区必须始终被图片盖住，所以最多移到图片边缘
+    var maxX = Math.max(0, (d.w - crop.view) / 2);
+    var maxY = Math.max(0, (d.h - crop.view) / 2);
+    crop.ox = Math.min(maxX, Math.max(-maxX, crop.ox));
+    crop.oy = Math.min(maxY, Math.max(-maxY, crop.oy));
+    var el = $('cropImg');
+    el.style.width = d.w + 'px';
+    el.style.height = d.h + 'px';
+    // 让图片中心落在「取景区中心 + 偏移」上
+    el.style.left = (crop.view / 2 + crop.ox - d.w / 2) + 'px';
+    el.style.top = (crop.view / 2 + crop.oy - d.h / 2) + 'px';
+  }
+
+  function cropConfirm() {
+    if (!crop.img) return;
+    var d = dispSize();
+    // 取景区左上角在「图片左上角坐标系」里的位置，再换算回原图坐标
+    var imgLeft = crop.view / 2 + crop.ox - d.w / 2;
+    var imgTop = crop.view / 2 + crop.oy - d.h / 2;
+    var cv = document.createElement('canvas');
+    cv.width = OUT_SIZE; cv.height = OUT_SIZE;
+    var cx = cv.getContext('2d');
+    cx.imageSmoothingQuality = 'high';
+    cx.drawImage(crop.img,
+      -imgLeft / d.s, -imgTop / d.s, crop.view / d.s, crop.view / d.s,
+      0, 0, OUT_SIZE, OUT_SIZE);
+    var out = '';
+    try { out = cv.toDataURL('image/png'); } catch (e) { out = ''; }
+    var cb = crop.done;
+    closeCropper();
+    if (cb) cb(out);
+  }
+
+  $('cropRange').addEventListener('input', function () {
+    crop.zoom = (parseInt(this.value, 10) || 100) / 100;
+    applyCrop();
+  });
+  $('cropOk').onclick = cropConfirm;
+  $('cropCancel').onclick = closeCropper;
+
+  // 拖动移动：pointer 事件同时覆盖鼠标与触摸
+  (function () {
+    var st = $('cropStage');
+    var dragging = false, sx = 0, sy = 0, ox0 = 0, oy0 = 0;
+    st.addEventListener('pointerdown', function (e) {
+      if (!crop.img) return;
+      dragging = true; sx = e.clientX; sy = e.clientY;
+      ox0 = crop.ox; oy0 = crop.oy;
+      try { st.setPointerCapture(e.pointerId); } catch (err) {}
+      e.preventDefault();
+    });
+    st.addEventListener('pointermove', function (e) {
+      if (!dragging || !crop.img) return;
+      crop.ox = ox0 + (e.clientX - sx);
+      crop.oy = oy0 + (e.clientY - sy);
+      applyCrop();
+    });
+    function end(e) {
+      dragging = false;
+      try { st.releasePointerCapture(e.pointerId); } catch (err) {}
+    }
+    st.addEventListener('pointerup', end);
+    st.addEventListener('pointercancel', end);
+  })();
+
+  /* ============================================================
+     极简 MQTT 3.1.1 over WebSocket 客户端
+     只需要 CONNECT / PUBLISH(QoS0) / PINGREQ，够把资料推给主机即可。
+     ============================================================ */
+  function encStr(s) {
+    var b = new TextEncoder().encode(s);
+    return [(b.length >> 8) & 0xFF, b.length & 0xFF].concat(Array.prototype.slice.call(b));
+  }
+  function encLen(n) {
+    var out = [];
+    do {
+      var d = n % 128; n = Math.floor(n / 128);
+      if (n > 0) d |= 0x80;
+      out.push(d);
+    } while (n > 0);
+    return out;
+  }
+  function pkt(type, flags, body) {
+    return new Uint8Array([(type << 4) | flags].concat(encLen(body.length), body));
+  }
+  function connectPkt(clientId) {
+    var body = [0x00, 0x04, 0x4D, 0x51, 0x54, 0x54, 0x04, 0x02, 0x00, 0x3C]
+      .concat(encStr(clientId));
+    return pkt(1, 0, body);
+  }
+  function publishPkt(topic, payload) {
+    var b = new TextEncoder().encode(payload);
+    var body = encStr(topic).concat(Array.prototype.slice.call(b));
+    return pkt(3, 0, body);
+  }
+
+  /** 通过 MQTT 发布一条资料。Promise 化，超时 8 秒判失败。 */
+  function mqttPublish(broker, topic, payload) {
+    return new Promise(function (resolve, reject) {
+      var ws = null, done = false;
+      var timer = setTimeout(function () {
+        finish(new Error('timeout'));
+      }, 8000);
+      function finish(err) {
+        if (done) return;
+        done = true;
+        clearTimeout(timer);
+        try { if (ws) ws.close(); } catch (e) {}
+        err ? reject(err) : resolve();
+      }
+      try {
+        ws = new WebSocket(broker, 'mqtt');
+      } catch (e) { finish(new Error('nows')); return; }
+      ws.binaryType = 'arraybuffer';
+      ws.onopen = function () { ws.send(connectPkt('guest' + Math.random().toString(36).slice(2, 10))); };
+      ws.onmessage = function (ev) {
+        var u = new Uint8Array(ev.data);
+        if (u.length < 2) return;
+        var type = u[0] >> 4;
+        if (type === 2) {                       // CONNACK
+          if (u[3] !== 0) { finish(new Error('connack ' + u[3])); return; }
+          ws.send(publishPkt(topic, payload));
+          // QoS 0 无回执，留一拍再断开，确保 broker 已收下
+          setTimeout(function () { finish(null); }, 250);
+        }
+      };
+      ws.onerror = function () { finish(new Error('ws')); };
+      ws.onclose = function () { finish(new Error('ws')); };
+    });
+  }
+
+  /* ============================================================
+     提交
+     ============================================================ */
+  function buildPayload() {
+    return JSON.stringify({
+      name: state.name,
+      emoji: state.emoji,
+      color: state.color,
+      impressions: state.imps,
+      avatar: state.avatar.replace(/^data:image\/\w+;base64,/, ''),
+      avatarMime: state.avatar.indexOf('data:image/png') === 0 ? 'png' : 'jpeg',
+      ts: Date.now()
+    });
+  }
+
+  var busy = false;
+  $('submit').onclick = function () {
+    if (busy) return;
+    state.name = $('name').value.trim();
+    if (!state.name) { say(T('needName'), 'err'); $('name').focus(); return; }
+    busy = true;
+    $('submit').disabled = true;
+    say(T('sending'), '');
+
+    var payload = buildPayload();
+    var p;
+    if (RELAY) {
+      p = mqttPublish(BROKER, TOPIC, payload);
+    } else {
+      p = fetch('api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: payload
+      }).then(function (r) { if (!r.ok) throw new Error('http ' + r.status); });
+    }
+
+    p.then(function () {
+      busy = false;
+      $('submit').disabled = false;
+      say(T('ok'), 'ok');
+      reset();
+    }).catch(function (err) {
+      busy = false;
+      $('submit').disabled = false;
+      var m = String(err && err.message || err);
+      say(m.indexOf('timeout') >= 0 || m.indexOf('ws') >= 0 || m.indexOf('http') >= 0
+        ? T('errNet') : (T('errSrv') + m + ')'), 'err');
+    });
+  };
+
+  function reset() {
+    $('name').value = '';
+    state.name = '';
+    state.avatar = '';
+    state.imps = [];
+    state.emoji = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+    buildEmoji(); buildImps(); renderAvatar();
+  }
+
+  buildEmoji();
+  buildColors();
+  buildImps();
+  buildPreset();
+  renderAvatar();
+})();
+</script>
+</body>
+</html>

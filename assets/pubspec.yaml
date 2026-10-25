@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 3.3.0+1
+version: 3.3.1+1
 
 environment:
   sdk: ^3.6.2
@@ -111,7 +111,9 @@ flutter:
     - assets/audio/
     - assets/translations/
     # 局域网资料录入的客人端页面：原生端由 HTTP 服务吐出，网页版由二维码直接指向这里
-    - assets/guest_entry.html
+    # 注意：不要带 assets/ 前缀，否则 flutter 会把它放到 build/web/assets/assets/guest_entry.html
+    # （多一层 assets/），网页版按 assets/guest_entry.html 去取就会 404。
+    - guest_entry.html
     - pubspec.yaml
   fonts:
 #    - family: HYPixel11pxU
