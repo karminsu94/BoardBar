@@ -342,5 +342,9 @@
   "全部取消": "Unlink All",
   "取消关联后 {name} 会恢复为独立剧本": "{name} becomes a standalone script again",
   "取消本组全部关联，各剧本恢复独立展示": "Unlink the whole group; each script shows separately",
-  "制胜项 · {round}：{name} {s}/{t}": "Decisive · {round}: {name} {s}/{t}"
+  "制胜项 · {round}：{name} {s}/{t}": "Decisive · {round}: {name} {s}/{t}",
+  "勾选顺序即计分卡顺序": "Check order = scorecard order",
+  "还没有常用玩家": "No saved players yet",
+  "可以让同桌扫码录入玩家": "Let players scan the QR code to join",
+  "更换玩家会重置本局分数，确定吗？": "Changing players resets this round. Continue?"
 }
