@@ -71,21 +71,6 @@
     padding:8px 14px;cursor:pointer;box-shadow:0 2px 0 var(--line);
   }
   .btn:active{transform:translateY(2px);box-shadow:none}
-  .chips{display:flex;flex-wrap:wrap;gap:7px;min-height:10px}
-  .chip{
-    font-size:13px;background:var(--teal);color:#fff;border:2px solid var(--line);
-    border-radius:999px;padding:4px 8px 4px 10px;display:flex;align-items:center;gap:6px;
-  }
-  .chip b{
-    cursor:pointer;font-weight:700;background:rgba(255,255,255,.28);
-    border-radius:50%;width:17px;height:17px;display:flex;align-items:center;justify-content:center;
-    font-size:11px;line-height:1;
-  }
-  .preset{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
-  .pchip{
-    font-size:12.5px;background:#fff;border:2px dashed #b9a68d;border-radius:999px;
-    padding:4px 10px;cursor:pointer;color:#7a6552;
-  }
   .submit{
     width:100%;margin-top:20px;padding:14px;font-size:16px;font-weight:800;
     font-family:inherit;letter-spacing:1px;color:var(--ink);
@@ -105,7 +90,7 @@
   .foot{margin-top:14px;text-align:center;font-size:11.5px;color:#a2907a}
   hr.stitch{border:0;border-top:2px dashed #d8c3a3;margin:18px 0 0}
 
-  /* ===== 头像裁剪弹窗：拖动移动 + 滑块缩放，圆形裁出 128×128（与 App 内一致） ===== */
+  /* ===== 头像裁剪弹窗：拖动移动 + 滑块缩放，圆形裁出 384×384（与 App 内一致） ===== */
   .modal{
     position:fixed;left:0;top:0;right:0;bottom:0;z-index:50;
     background:rgba(35,24,14,.62);
@@ -169,20 +154,12 @@
       <button class="btn" id="pickBtn" type="button">📷 <span id="tUpload">上传头像</span></button>
       <button class="btn" id="clearBtn" type="button" style="margin-left:6px">↩️ <span id="tUseEmoji">用 emoji</span></button>
       <input type="file" id="file" accept="image/*" hidden>
-      <div style="font-size:11.5px;color:#9a8570;margin-top:6px" id="tAvatarTip">可裁成 128×128 圆形</div>
+      <div style="font-size:11.5px;color:#9a8570;margin-top:6px" id="tAvatarTip">可裁成 384×384 圆形</div>
     </div>
   </div>
 
   <label class="lbl" id="tColorLbl">主题色</label>
   <div class="grid" id="colorGrid"></div>
-
-  <label class="lbl" id="tImpLbl">印象标签（可选，最多 4 条）</label>
-  <div class="chips" id="impList"></div>
-  <div class="row" style="margin-top:9px">
-    <input type="text" id="impInput" maxlength="10" placeholder="例如：运气爆棚" autocomplete="off" style="flex:1;min-width:120px">
-    <button class="btn" id="impAdd" type="button">＋</button>
-  </div>
-  <div class="preset" id="preset"></div>
 
   <button class="submit" id="submit" type="button">✅ <span id="tSubmit">提交给主机</span></button>
   <div class="msg" id="msg"></div>
@@ -229,17 +206,15 @@
     0xFF03A9F4, 0xFF00BCD4, 0xFF009688, 0xFF4CAF50, 0xFF8BC34A, 0xFFCDDC39,
     0xFFFFEB3B, 0xFFFFC107, 0xFFFF9800, 0xFFFF5722, 0xFF795548, 0xFF607D8B
   ];
-  var PRESET_IMP = ['运气爆棚','老谋深算','桌游新手','稳如老狗','嘴强王者','慢热型','细节控','常胜将军'];
-
   var STR = {
     zh: {
       title:'📇 玩家资料录入', sub:'填好后提交，主机端会收到你的资料',
       name:'昵称 *', emoji:'选个头像（可选）', upload:'上传头像', useEmoji:'用 emoji',
-      tip:'图片会自动裁成 128×128 圆形', color:'主题色',
-      imp:'印象标签（可选，最多 4 条）', submit:'提交给主机',
-      phName:'桌友平时怎么称呼你', phImp:'例如：运气爆棚',
+      tip:'图片会自动裁成 384×384 圆形', color:'主题色',
+      submit:'提交给主机',
+      phName:'桌友平时怎么称呼你',
       lanMode:'局域网直连', relayMode:'云端中转',
-      needName:'请填写昵称', tooMany:'印象最多 4 条',
+      needName:'请填写昵称',
       sending:'正在提交…', ok:'提交成功！主机端已收到，等主持人确认 ✅',
       okAgain:'已收到，你可以继续提交下一位 ✅',
       errNet:'网络不通，请靠近主机或检查同一 WiFi',
@@ -251,11 +226,11 @@
     en: {
       title:'📇 Player Sign-up', sub:'Fill this in and the host will receive your profile',
       name:'Nickname *', emoji:'Pick an avatar (optional)', upload:'Upload photo', useEmoji:'Use emoji',
-      tip:'Photos are cropped to 128×128', color:'Theme color',
-      imp:'Impression tags (optional, max 4)', submit:'Send to host',
-      phName:'What do your friends call you', phImp:'e.g. Lucky one',
+      tip:'Photos are cropped to 384×384', color:'Theme color',
+      submit:'Send to host',
+      phName:'What do your friends call you',
       lanMode:'LAN direct', relayMode:'Cloud relay',
-      needName:'Please enter a nickname', tooMany:'Max 4 impression tags',
+      needName:'Please enter a nickname',
       sending:'Sending…', ok:'Sent! The host received it, waiting for confirmation ✅',
       okAgain:'Received — you can add another player ✅',
       errNet:'Network unreachable — move closer to the host or check the WiFi',
@@ -285,7 +260,6 @@
   setText('tUseEmoji', T('useEmoji'));
   setText('tAvatarTip', T('tip'));
   setText('tColorLbl', T('color'));
-  setText('tImpLbl', T('imp'));
   setText('tSubmit', T('submit'));
   setText('foot', T('foot'));
   setText('cropTitle', T('cropTitle'));
@@ -293,15 +267,13 @@
   setText('cropCancel', T('cancel'));
   setText('cropOk', T('confirm'));
   document.getElementById('name').placeholder = T('phName');
-  document.getElementById('impInput').placeholder = T('phImp');
 
   // ---------- 状态 ----------
   var state = {
     name: '',
     emoji: EMOJIS[Math.floor(Math.random() * EMOJIS.length)],
     color: COLORS[Math.floor(Math.random() * COLORS.length)],
-    avatar: '',            // base64 dataURL，空表示用 emoji
-    imps: []
+    avatar: ''            // base64 dataURL，空表示用 emoji
   };
 
   var $ = function (id) { return document.getElementById(id); };
@@ -361,49 +333,6 @@
     });
   }
 
-  function buildImps() {
-    var box = $('impList');
-    box.innerHTML = '';
-    state.imps.forEach(function (t, i) {
-      var c = document.createElement('div');
-      c.className = 'chip';
-      c.appendChild(document.createTextNode(t));
-      var x = document.createElement('b');
-      x.textContent = '×';
-      x.onclick = function () { state.imps.splice(i, 1); buildImps(); };
-      c.appendChild(x);
-      box.appendChild(c);
-    });
-  }
-
-  function buildPreset() {
-    var box = $('preset');
-    box.innerHTML = '';
-    PRESET_IMP.forEach(function (t) {
-      var c = document.createElement('div');
-      c.className = 'pchip';
-      c.textContent = '＋ ' + t;
-      c.onclick = function () {
-        if (state.imps.length >= 4 || state.imps.indexOf(t) >= 0) return;
-        state.imps.push(t);
-        buildImps();
-      };
-      box.appendChild(c);
-    });
-  }
-
-  $('impAdd').onclick = function () {
-    var v = $('impInput').value.trim();
-    if (!v) return;
-    if (state.imps.length >= 4) { say(T('tooMany'), 'err'); return; }
-    if (state.imps.indexOf(v) < 0) state.imps.push(v);
-    $('impInput').value = '';
-    buildImps();
-  };
-  $('impInput').addEventListener('keydown', function (ev) {
-    if (ev.key === 'Enter') { ev.preventDefault(); $('impAdd').click(); }
-  });
-
   $('pickBtn').onclick = function () { $('file').click(); };
   $('clearBtn').onclick = function () { state.avatar = ''; renderAvatar(); };
   $('file').onchange = function (ev) {
@@ -423,9 +352,10 @@
 
   /* ============================================================
      头像裁剪：选完图先弹窗，可拖动移动 + 滑块缩放，圆形取景，
-     确认时按当前取景区裁出 128×128 PNG（与 App 内 EmojiPicker 的规格一致）。
+     确认时按当前取景区裁出 384×384 PNG（与 App 内 EmojiPicker 的规格一致）。
+     注意：下方 base64 分块用的 n % 128 是传输分块大小，与此处头像分辨率无关，勿改。
      ============================================================ */
-  var OUT_SIZE = 128;
+  var OUT_SIZE = 384;
   var crop = { img: null, view: 250, base: 1, zoom: 1, ox: 0, oy: 0, done: null };
 
   function openCropper(dataUrl, done) {
@@ -602,7 +532,6 @@
       name: state.name,
       emoji: state.emoji,
       color: state.color,
-      impressions: state.imps,
       avatar: state.avatar.replace(/^data:image\/\w+;base64,/, ''),
       avatarMime: state.avatar.indexOf('data:image/png') === 0 ? 'png' : 'jpeg',
       ts: Date.now()
@@ -648,15 +577,12 @@
     $('name').value = '';
     state.name = '';
     state.avatar = '';
-    state.imps = [];
     state.emoji = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
-    buildEmoji(); buildImps(); renderAvatar();
+    buildEmoji(); renderAvatar();
   }
 
   buildEmoji();
   buildColors();
-  buildImps();
-  buildPreset();
   renderAvatar();
 })();
 </script>
