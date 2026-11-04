@@ -416,6 +416,11 @@
     cv.width = OUT_SIZE; cv.height = OUT_SIZE;
     var cx = cv.getContext('2d');
     cx.imageSmoothingQuality = 'high';
+    // 圆形输出：与屏上的圆形取景区（crop-mask 是整框内切圆）一致，
+    // 也与 App 内 EmojiPicker 的圆形裁剪规格统一（圆外透明）。
+    cx.beginPath();
+    cx.arc(OUT_SIZE / 2, OUT_SIZE / 2, OUT_SIZE / 2, 0, Math.PI * 2);
+    cx.clip();
     cx.drawImage(crop.img,
       -imgLeft / d.s, -imgTop / d.s, crop.view / d.s, crop.view / d.s,
       0, 0, OUT_SIZE, OUT_SIZE);

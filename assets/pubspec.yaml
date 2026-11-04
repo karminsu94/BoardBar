@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 3.3.4+1
+version: 3.4.0+1
 
 environment:
   sdk: ^3.6.2
@@ -136,6 +136,13 @@ flutter:
     - family: BoTa
       fonts:
         - asset: assets/fonts/BoTa-2.otf
+    # 本地彩色 emoji 字体：覆盖 Flutter Web(CanvasKit) 引擎内置的 gstatic 兜底。
+    # 引擎在缺 emoji 字形时会去 fonts.gstatic.com 下载 Noto Color Emoji（国内被墙→报错+豆腐块）。
+    # 必须把本地字体写进 FontManifest 才能让引擎在启动期装载、彻底不走 gstatic。
+    # 注意：pubspec 字体各端共用，会进 Android/iOS 包（移动端本有系统 emoji，属冗余体积，但能保证 web 必生效）。
+    - family: Noto Color Emoji
+      fonts:
+        - asset: assets/fonts/NotoColorEmoji.ttf
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
