@@ -3,9 +3,9 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"assets/AssetManifest.bin": "98cfcda1b0f63e7867bc687ceb6dc94b",
-"assets/AssetManifest.bin.json": "fe2da2c17904bcc23e6cd3f9c8639961",
-"assets/AssetManifest.json": "6a6a03868188145dadea6a86ba46be5a",
+const RESOURCES = {"assets/AssetManifest.bin": "b51e54c3172d477360946ffdf17538c2",
+"assets/AssetManifest.bin.json": "4edcf6eff877ff8cc5abf965ae06cd25",
+"assets/AssetManifest.json": "3ec6a68211219b5f23cb549696f0c95a",
 "assets/assets/audio/minus1.MP3": "300d0ccf33b917d52349fd4a7b788c7e",
 "assets/assets/audio/minus5-10.MP3": "52ee2eed857187efdb726afe61210b4f",
 "assets/assets/audio/plus1.MP3": "bb7f47f133c50f799e0972b63c5c98ee",
@@ -94,12 +94,12 @@ const RESOURCES = {"assets/AssetManifest.bin": "98cfcda1b0f63e7867bc687ceb6dc94b
 "assets/assets/scriptIcon/theWhiteCastle-poster.jpg": "033d7f5a4b48201d5d4e0b6c33fc3855",
 "assets/assets/translations/en.json": "2fd9d41f98a0f9173bfc52b7c1b7f5d4",
 "assets/assets/translations/zh.json": "5d65eaaec890fce0d9e5ad5460682e7e",
-"assets/FontManifest.json": "9170069aed0e11e088613366821101f3",
+"assets/FontManifest.json": "3ba0154d27672230a041254a7da33139",
 "assets/fonts/MaterialIcons-Regular.otf": "e11f1f6e1f472987b2faf632c1fb1687",
 "assets/guest_entry.html": "4e156ef2967e690002691f444ef58b1d",
 "assets/NOTICES": "98f6aa0b1bb24769c8cfc2d84eb2f603",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "33b7d9392238c04c131b6ce224e13711",
-"assets/pubspec.yaml": "da692212fd61be86f595e06d81af3ecd",
+"assets/pubspec.yaml": "eeef0487bce96700bc8b39444a9363e5",
 "assets/shaders/ink_sparkle.frag": "ecc85a2e95f5e9f53123dcaf8cb9b6ce",
 "canvaskit/canvaskit.js": "8331fe38e66b3a898c4f37648aaf7ee2",
 "canvaskit/canvaskit.js.symbols": "a3c9f77715b642d0437d9c275caba91e",
@@ -115,16 +115,16 @@ const RESOURCES = {"assets/AssetManifest.bin": "98cfcda1b0f63e7867bc687ceb6dc94b
 "canvaskit/skwasm_heavy.wasm": "b0be7910760d205ea4e011458df6ee01",
 "favicon.png": "fcb4c59db7b219c0a7ee388e5b9c5a5b",
 "flutter.js": "888483df48293866f9f41d3d9274a779",
-"flutter_bootstrap.js": "16cdb1259ffa7850dcc53192333eba66",
+"flutter_bootstrap.js": "ed2ec99b7d98bb3757e17e22d2c91667",
 "icons/Icon-192.png": "aa83ae936d61ac8b515c03f3df698c13",
 "icons/Icon-512.png": "59c93663d40f22208efdf6137e4a9d6b",
 "icons/Icon-maskable-192.png": "aa83ae936d61ac8b515c03f3df698c13",
 "icons/Icon-maskable-512.png": "59c93663d40f22208efdf6137e4a9d6b",
 "index.html": "d2c35a1355aa2187e7a5e929249e3053",
 "/": "d2c35a1355aa2187e7a5e929249e3053",
-"main.dart.js": "c9384290b505728494516a7b2216e008",
+"main.dart.js": "e925d6895628713a785dda4abc201d2d",
 "manifest.json": "9484cc808e5d1af86043e5fa0a4aee28",
-"version.json": "17f1dce6498daa545a66ef75a8099b0d"};
+"version.json": "9e18db4b1e8afeaaec3c56d60e5620ba"};
 // The application shell files that are downloaded before a service worker can
 // start.
 const CORE = ["main.dart.js",
