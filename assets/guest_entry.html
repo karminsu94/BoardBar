@@ -87,6 +87,18 @@
     text-align:center;padding:24px 8px;
   }
   .done .big{font-size:52px;line-height:1;margin-bottom:8px}
+  /* ===== 提交完成画面：整卡切换，大勾 + 文案 + 「继续添加」按钮 ===== */
+  .doneFull{ text-align:center; padding:28px 10px 10px; }
+  .doneFull .big{ font-size:72px; line-height:1; margin-bottom:12px; }
+  .doneFull h2{ margin:0 0 6px; font-size:19px; color:var(--ink); }
+  .doneFull p{ margin:0 0 22px; font-size:13.5px; color:#9a8570; line-height:1.6; }
+  .again{
+    width:100%; padding:13px; font-size:15px; font-weight:800;
+    font-family:inherit; letter-spacing:1px; color:var(--ink);
+    background:var(--gold); border:3px solid var(--line); border-radius:12px;
+    box-shadow:0 4px 0 var(--line); cursor:pointer;
+  }
+  .again:active{ transform:translateY(4px); box-shadow:none; }
   .foot{margin-top:14px;text-align:center;font-size:11.5px;color:#a2907a}
   hr.stitch{border:0;border-top:2px dashed #d8c3a3;margin:18px 0 0}
 
@@ -165,6 +177,14 @@
   <div class="msg" id="msg"></div>
   <hr class="stitch">
   <div class="foot" id="foot"></div>
+
+  <!-- 提交完成画面：整卡替换表单，明确告知已提交；「继续添加」返回表单 -->
+  <div class="doneFull" id="doneFull" hidden>
+    <div class="big">✅</div>
+    <h2 id="doneTitle">已送达 🎉</h2>
+    <p id="doneSub">你的资料已经出现在主机端，<br>等主持人勾选保存。</p>
+    <button class="again" id="againBtn" type="button">➕ <span id="tAgain">继续添加</span></button>
+  </div>
 </div>
 
 <div class="modal" id="cropModal" hidden>
@@ -261,6 +281,9 @@
   setText('tAvatarTip', T('tip'));
   setText('tColorLbl', T('color'));
   setText('tSubmit', T('submit'));
+  setText('doneTitle', T('doneTitle'));
+  setText('doneSub', T('doneSub'));
+  setText('tAgain', T('again'));
   setText('foot', T('foot'));
   setText('cropTitle', T('cropTitle'));
   setText('cropTip', T('cropTip'));
@@ -567,8 +590,9 @@
     p.then(function () {
       busy = false;
       $('submit').disabled = false;
-      say(T('ok'), 'ok');
-      reset();
+      // 提交成功 → 切到**完成画面**（整卡替换表单），明确告知已提交；
+      // 「继续添加」按钮回到表单继续录入下一位。
+      showDoneFull();
     }).catch(function (err) {
       busy = false;
       $('submit').disabled = false;
@@ -585,6 +609,38 @@
     state.emoji = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
     buildEmoji(); renderAvatar();
   }
+
+  /* 提交完成画面：隐藏表单区（从昵称到消息条），显示完成层 */
+  var FORM_IDS = ['tNameLbl','name','tEmojiLbl','emojiGrid','tColorLbl','colorGrid',
+                  'submit','msg','foot'];
+  function showDoneFull() {
+    say('', '');
+    for (var i = 0; i < FORM_IDS.length; i++) {
+      var e = document.getElementById(FORM_IDS[i]);
+      if (e) e.hidden = true;
+    }
+    // 头像上传行是 .row 容器（内含 pick/clear/file/tip），按 id 藏不到 → 遍历 class
+    var rows = document.querySelectorAll('.card > .row');
+    for (var j = 0; j < rows.length; j++) rows[j].hidden = true;
+    var lbls = document.querySelectorAll('.card > .lbl');
+    for (var k = 0; k < lbls.length; k++) lbls[k].hidden = true;
+    $('doneFull').hidden = false;
+  }
+  function backToForm() {
+    $('doneFull').hidden = true;
+    for (var i = 0; i < FORM_IDS.length; i++) {
+      var e = document.getElementById(FORM_IDS[i]);
+      if (e) e.hidden = false;
+    }
+    var rows = document.querySelectorAll('.card > .row');
+    for (var j = 0; j < rows.length; j++) rows[j].hidden = false;
+    var lbls = document.querySelectorAll('.card > .lbl');
+    for (var k = 0; k < lbls.length; k++) lbls[k].hidden = false;
+    reset();
+    say(T('okAgain'), 'ok');
+    $('name').focus();
+  }
+  $('againBtn').onclick = backToForm;
 
   buildEmoji();
   buildColors();

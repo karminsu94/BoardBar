@@ -435,5 +435,17 @@
   "合计": "Net",
   "回本中": "Paying Off",
   "导入完成：玩家 {p} 个，剧本 {s} 个，对局 {g} 个，关联 {l} 条": "Imported: {p} players, {s} scripts, {g} games, {l} links",
-  "已删除": "Deleted"
+  "已删除": "Deleted",
+  "价值账本": "Value Ledger",
+  "购入价格": "Price",
+  "平均游玩成本": "Avg Cost",
+  "等价价值": "Earned Value",
+  "回本进度": "Payback",
+  "超越金额": "Surplus",
+  "收到的印象": "Impressions Received",
+  "还没有收到印象": "No impressions yet",
+  "各剧本最高分": "Best Score per Script",
+  "还没有终局计分剧本的成绩": "No final-scoring results yet",
+  "市场游玩等值（8¥/人/H）": "Market play value (¥8/person/hr)",
+  "已导出 {p} 个玩家、{s} 个剧本、{g} 局对局、{l} 条关联": "Exported {p} players, {s} scripts, {g} games, {l} links"
 }
