@@ -34,7 +34,7 @@
   "或自己输入一个 emoji 作为头像": "Or type an emoji as the avatar",
   "所见即所得": "What you see is what you get",
   "请输入名称": "Please enter a name",
-  "副计分器B": "Sub B",
+  "副计分器B": "Sub-counter B",
   "暂无对局记录": "No game records yet",
   "选择玩家": "Select Player",
   "选择特殊胜利": "Select Special Win",
@@ -57,10 +57,11 @@
   "还没有保存的玩家\\n打完一局后会自动记录常用玩家，或点右上角 + 手动添加": "No saved players yet\nFrequent players are recorded automatically after a game, or tap + at the top right to add manually",
   "Default (无 script)": "Default (no script)",
   "上传图片作为头像": "Upload an image as avatar",
-  "副计分器A": "Sub A",
+  "副计分器A": "Sub-counter A",
   "快捷键": "Shortcuts",
   "截取圆形头像": "Crop circular avatar",
   "重开": "Restart",
+  "横屏模式": "Landscape Mode",
   "增加玩家": "Add Player",
   "对决": "Duel",
   "多人": "Multiplayer",
@@ -292,6 +293,7 @@
   "目标分数": "Target score",
   "终局计分设置": "Final scoring options",
   "无固定回合": "No fixed rounds",
+  "自由回合，无固定轮次": "Free rounds, no fixed round limit",
   "显示总分": "Show total score",
   "最高分获胜": "Highest score wins",
   "最低分获胜": "Lowest score wins",
@@ -447,5 +449,6 @@
   "各剧本最高分": "Best Score per Script",
   "还没有终局计分剧本的成绩": "No final-scoring results yet",
   "市场游玩等值（8¥/人/H）": "Market play value (¥8/person/hr)",
-  "已导出 {p} 个玩家、{s} 个剧本、{g} 局对局、{l} 条关联": "Exported {p} players, {s} scripts, {g} games, {l} links"
+  "已导出 {p} 个玩家、{s} 个剧本、{g} 局对局、{l} 条关联": "Exported {p} players, {s} scripts, {g} games, {l} links",
+  "换印象布局": "Shuffle Stickers"
 }
